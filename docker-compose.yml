@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  php:
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    environment:
+      - PHP_DISPLAY_ERRORS=1

@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Creatissimo\AmazonAdsApi\Api;
+
+use Creatissimo\AmazonAdsApi\Http\HttpClient;
+use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
+
+final class RecommendationsApi
+{
+    private const PATH_CREATE = '/adsApi/v1/create/recommendations/sb';
+    private const PATH_QUERY_TYPES = '/adsApi/v1/query/recommendationTypes/sb';
+
+    public function __construct(
+        private readonly HttpClient $httpClient,
+    ) {
+    }
+
+    /** @param array[] $recommendations */
+    public function create(array $recommendations): MultiStatusResponse
+    {
+        $response = $this->httpClient->post(
+            self::PATH_CREATE,
+            ['recommendations' => $recommendations],
+        )->ensureMultiStatus();
+
+        return MultiStatusResponse::fromArray($response->getData());
+    }
+
+    public function queryTypes(array $filters): array
+    {
+        $response = $this->httpClient->post(self::PATH_QUERY_TYPES, $filters)->ensureSuccess();
+
+        return $response->getData();
+    }
+}
