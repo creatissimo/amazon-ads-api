@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
+use Creatissimo\AmazonAdsApi\Model\DSPCampaignForecastMultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\DSPRetrieveCampaignForecastRequest;
 
 final class CampaignForecastsApi
 {
@@ -15,10 +17,10 @@ final class CampaignForecastsApi
     ) {
     }
 
-    public function retrieve(array $filters): array
+    public function retrieve(DSPRetrieveCampaignForecastRequest $request): DSPCampaignForecastMultiStatusResponse
     {
-        $response = $this->httpClient->post(self::PATH_RETRIEVE, $filters)->ensureSuccess();
+        $response = $this->httpClient->post(self::PATH_RETRIEVE, $request->toArray())->ensureMultiStatus();
 
-        return $response->getData();
+        return DSPCampaignForecastMultiStatusResponse::fromArray($response->getData());
     }
 }

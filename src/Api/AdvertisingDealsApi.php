@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\SBAdvertisingDealCreate;
+use Creatissimo\AmazonAdsApi\Model\SBAdvertisingDealMultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\SBAdvertisingDealSuccessResponse;
+use Creatissimo\AmazonAdsApi\Model\SBAdvertisingDealUpdate;
+use Creatissimo\AmazonAdsApi\Model\SBQueryAdvertisingDealRequest;
 
 final class AdvertisingDealsApi
 {
@@ -19,43 +23,51 @@ final class AdvertisingDealsApi
     ) {
     }
 
-    /** @param array[] $advertisingDeals */
-    public function create(array $advertisingDeals): MultiStatusResponse
+    /** @param SBAdvertisingDealCreate[] $advertisingDeals */
+    public function create(array $advertisingDeals): SBAdvertisingDealMultiStatusResponse
     {
-        $response = $this->httpClient->post(
-            self::PATH_CREATE,
-            ['advertisingDeals' => $advertisingDeals],
-        )->ensureMultiStatus();
+        $body = [
+            'advertisingDeals' => array_map(
+                static fn(SBAdvertisingDealCreate $d) => $d->toArray(),
+                $advertisingDeals,
+            ),
+        ];
 
-        return MultiStatusResponse::fromArray($response->getData());
+        $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
+
+        return SBAdvertisingDealMultiStatusResponse::fromArray($response->getData());
     }
 
-    public function query(array $filters): array
+    public function query(SBQueryAdvertisingDealRequest $request): SBAdvertisingDealSuccessResponse
     {
-        $response = $this->httpClient->post(self::PATH_QUERY, $filters)->ensureSuccess();
+        $response = $this->httpClient->post(self::PATH_QUERY, $request->toArray())->ensureSuccess();
 
-        return $response->getData();
+        return SBAdvertisingDealSuccessResponse::fromArray($response->getData());
     }
 
-    /** @param array[] $advertisingDeals */
-    public function update(array $advertisingDeals): MultiStatusResponse
+    /** @param SBAdvertisingDealUpdate[] $advertisingDeals */
+    public function update(array $advertisingDeals): SBAdvertisingDealMultiStatusResponse
     {
-        $response = $this->httpClient->post(
-            self::PATH_UPDATE,
-            ['advertisingDeals' => $advertisingDeals],
-        )->ensureMultiStatus();
+        $body = [
+            'advertisingDeals' => array_map(
+                static fn(SBAdvertisingDealUpdate $d) => $d->toArray(),
+                $advertisingDeals,
+            ),
+        ];
 
-        return MultiStatusResponse::fromArray($response->getData());
+        $response = $this->httpClient->post(self::PATH_UPDATE, $body)->ensureMultiStatus();
+
+        return SBAdvertisingDealMultiStatusResponse::fromArray($response->getData());
     }
 
     /** @param string[] $advertisingDealIds */
-    public function delete(array $advertisingDealIds): MultiStatusResponse
+    public function delete(array $advertisingDealIds): SBAdvertisingDealMultiStatusResponse
     {
         $response = $this->httpClient->post(
             self::PATH_DELETE,
             ['advertisingDealIds' => $advertisingDealIds],
         )->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return SBAdvertisingDealMultiStatusResponse::fromArray($response->getData());
     }
 }

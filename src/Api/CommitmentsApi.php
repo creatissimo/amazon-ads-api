@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\DSPCommitmentCreate;
+use Creatissimo\AmazonAdsApi\Model\DSPCommitmentMultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\DSPCommitmentSuccessResponse;
+use Creatissimo\AmazonAdsApi\Model\DSPCommitmentUpdate;
+use Creatissimo\AmazonAdsApi\Model\DSPRetrieveCommitmentRequest;
 
 final class CommitmentsApi
 {
@@ -19,18 +23,22 @@ final class CommitmentsApi
     ) {
     }
 
-    /** @param array[] $commitments */
-    public function create(array $commitments): MultiStatusResponse
+    /** @param DSPCommitmentCreate[] $commitments */
+    public function create(array $commitments): DSPCommitmentMultiStatusResponse
     {
-        $response = $this->httpClient->post(
-            self::PATH_CREATE,
-            ['commitments' => $commitments],
-        )->ensureMultiStatus();
+        $body = [
+            'commitments' => array_map(
+                static fn(DSPCommitmentCreate $c) => $c->toArray(),
+                $commitments,
+            ),
+        ];
 
-        return MultiStatusResponse::fromArray($response->getData());
+        $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
+
+        return DSPCommitmentMultiStatusResponse::fromArray($response->getData());
     }
 
-    public function list(?string $nextToken = null, ?int $maxResults = null): array
+    public function list(?string $nextToken = null, ?int $maxResults = null): DSPCommitmentSuccessResponse
     {
         $query = [];
 
@@ -49,24 +57,28 @@ final class CommitmentsApi
 
         $response = $this->httpClient->get($path)->ensureSuccess();
 
-        return $response->getData();
+        return DSPCommitmentSuccessResponse::fromArray($response->getData());
     }
 
-    public function retrieve(array $filters): array
+    public function retrieve(DSPRetrieveCommitmentRequest $request): DSPCommitmentMultiStatusResponse
     {
-        $response = $this->httpClient->post(self::PATH_RETRIEVE, $filters)->ensureSuccess();
+        $response = $this->httpClient->post(self::PATH_RETRIEVE, $request->toArray())->ensureMultiStatus();
 
-        return $response->getData();
+        return DSPCommitmentMultiStatusResponse::fromArray($response->getData());
     }
 
-    /** @param array[] $commitments */
-    public function update(array $commitments): MultiStatusResponse
+    /** @param DSPCommitmentUpdate[] $commitments */
+    public function update(array $commitments): DSPCommitmentMultiStatusResponse
     {
-        $response = $this->httpClient->post(
-            self::PATH_UPDATE,
-            ['commitments' => $commitments],
-        )->ensureMultiStatus();
+        $body = [
+            'commitments' => array_map(
+                static fn(DSPCommitmentUpdate $c) => $c->toArray(),
+                $commitments,
+            ),
+        ];
 
-        return MultiStatusResponse::fromArray($response->getData());
+        $response = $this->httpClient->post(self::PATH_UPDATE, $body)->ensureMultiStatus();
+
+        return DSPCommitmentMultiStatusResponse::fromArray($response->getData());
     }
 }

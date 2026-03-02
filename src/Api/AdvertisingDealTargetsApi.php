@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\SBAdvertisingDealTargetCreate;
+use Creatissimo\AmazonAdsApi\Model\SBAdvertisingDealTargetMultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\SBAdvertisingDealTargetSuccessResponse;
+use Creatissimo\AmazonAdsApi\Model\SBQueryAdvertisingDealTargetRequest;
 
 final class AdvertisingDealTargetsApi
 {
@@ -18,32 +21,36 @@ final class AdvertisingDealTargetsApi
     ) {
     }
 
-    /** @param array[] $advertisingDealTargets */
-    public function create(array $advertisingDealTargets): MultiStatusResponse
+    /** @param SBAdvertisingDealTargetCreate[] $advertisingDealTargets */
+    public function create(array $advertisingDealTargets): SBAdvertisingDealTargetMultiStatusResponse
     {
-        $response = $this->httpClient->post(
-            self::PATH_CREATE,
-            ['advertisingDealTargets' => $advertisingDealTargets],
-        )->ensureMultiStatus();
+        $body = [
+            'advertisingDealTargets' => array_map(
+                static fn(SBAdvertisingDealTargetCreate $t) => $t->toArray(),
+                $advertisingDealTargets,
+            ),
+        ];
 
-        return MultiStatusResponse::fromArray($response->getData());
+        $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
+
+        return SBAdvertisingDealTargetMultiStatusResponse::fromArray($response->getData());
     }
 
-    public function query(array $filters): array
+    public function query(SBQueryAdvertisingDealTargetRequest $request): SBAdvertisingDealTargetSuccessResponse
     {
-        $response = $this->httpClient->post(self::PATH_QUERY, $filters)->ensureSuccess();
+        $response = $this->httpClient->post(self::PATH_QUERY, $request->toArray())->ensureSuccess();
 
-        return $response->getData();
+        return SBAdvertisingDealTargetSuccessResponse::fromArray($response->getData());
     }
 
     /** @param string[] $advertisingDealTargetIds */
-    public function delete(array $advertisingDealTargetIds): MultiStatusResponse
+    public function delete(array $advertisingDealTargetIds): SBAdvertisingDealTargetMultiStatusResponse
     {
         $response = $this->httpClient->post(
             self::PATH_DELETE,
             ['advertisingDealTargetIds' => $advertisingDealTargetIds],
         )->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return SBAdvertisingDealTargetMultiStatusResponse::fromArray($response->getData());
     }
 }

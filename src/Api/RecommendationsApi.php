@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\SBQueryRecommendationTypeRequest;
+use Creatissimo\AmazonAdsApi\Model\SBRecommendationCreate;
+use Creatissimo\AmazonAdsApi\Model\SBRecommendationMultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\SBRecommendationTypeSuccessResponse;
 
 final class RecommendationsApi
 {
@@ -17,21 +20,25 @@ final class RecommendationsApi
     ) {
     }
 
-    /** @param array[] $recommendations */
-    public function create(array $recommendations): MultiStatusResponse
+    /** @param SBRecommendationCreate[] $recommendations */
+    public function create(array $recommendations): SBRecommendationMultiStatusResponse
     {
-        $response = $this->httpClient->post(
-            self::PATH_CREATE,
-            ['recommendations' => $recommendations],
-        )->ensureMultiStatus();
+        $body = [
+            'recommendations' => array_map(
+                static fn(SBRecommendationCreate $r) => $r->toArray(),
+                $recommendations,
+            ),
+        ];
 
-        return MultiStatusResponse::fromArray($response->getData());
+        $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
+
+        return SBRecommendationMultiStatusResponse::fromArray($response->getData());
     }
 
-    public function queryTypes(array $filters): array
+    public function queryTypes(SBQueryRecommendationTypeRequest $request): SBRecommendationTypeSuccessResponse
     {
-        $response = $this->httpClient->post(self::PATH_QUERY_TYPES, $filters)->ensureSuccess();
+        $response = $this->httpClient->post(self::PATH_QUERY_TYPES, $request->toArray())->ensureSuccess();
 
-        return $response->getData();
+        return SBRecommendationTypeSuccessResponse::fromArray($response->getData());
     }
 }

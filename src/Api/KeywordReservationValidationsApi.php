@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\SBKeywordReservationValidationCreate;
+use Creatissimo\AmazonAdsApi\Model\SBKeywordReservationValidationMultiStatusResponse;
 
 final class KeywordReservationValidationsApi
 {
@@ -16,14 +17,18 @@ final class KeywordReservationValidationsApi
     ) {
     }
 
-    /** @param array[] $keywordReservationValidations */
-    public function create(array $keywordReservationValidations): MultiStatusResponse
+    /** @param SBKeywordReservationValidationCreate[] $keywordReservationValidations */
+    public function create(array $keywordReservationValidations): SBKeywordReservationValidationMultiStatusResponse
     {
-        $response = $this->httpClient->post(
-            self::PATH_CREATE,
-            ['keywordReservationValidations' => $keywordReservationValidations],
-        )->ensureMultiStatus();
+        $body = [
+            'keywordReservationValidations' => array_map(
+                static fn(SBKeywordReservationValidationCreate $v) => $v->toArray(),
+                $keywordReservationValidations,
+            ),
+        ];
 
-        return MultiStatusResponse::fromArray($response->getData());
+        $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
+
+        return SBKeywordReservationValidationMultiStatusResponse::fromArray($response->getData());
     }
 }

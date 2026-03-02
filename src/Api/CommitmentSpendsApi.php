@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
+use Creatissimo\AmazonAdsApi\Model\DSPCommitmentSpendMultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\DSPRetrieveCommitmentSpendRequest;
 
 final class CommitmentSpendsApi
 {
@@ -15,10 +17,10 @@ final class CommitmentSpendsApi
     ) {
     }
 
-    public function retrieve(array $filters): array
+    public function retrieve(DSPRetrieveCommitmentSpendRequest $request): DSPCommitmentSpendMultiStatusResponse
     {
-        $response = $this->httpClient->post(self::PATH_RETRIEVE, $filters)->ensureSuccess();
+        $response = $this->httpClient->post(self::PATH_RETRIEVE, $request->toArray())->ensureMultiStatus();
 
-        return $response->getData();
+        return DSPCommitmentSpendMultiStatusResponse::fromArray($response->getData());
     }
 }

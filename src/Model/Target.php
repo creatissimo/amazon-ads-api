@@ -20,6 +20,7 @@ final class Target
         private ?string $globalTargetId = null,
         private ?string $targetLevel = null,
         private ?MarketplaceScope $marketplaceScope = null,
+        private ?Status $status = null,
         private array $bid = [],
         private array $marketplaceConfigurations = [],
         private array $marketplaces = [],
@@ -183,6 +184,18 @@ final class Target
         return $this;
     }
 
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
     public function getBid(): array
     {
         return $this->bid;
@@ -247,6 +260,7 @@ final class Target
             globalTargetId: $data['globalTargetId'] ?? null,
             targetLevel: $data['targetLevel'] ?? null,
             marketplaceScope: isset($data['marketplaceScope']) ? MarketplaceScope::from($data['marketplaceScope']) : null,
+            status: isset($data['status']) ? Status::fromArray($data['status']) : null,
             bid: $data['bid'] ?? [],
             marketplaceConfigurations: $data['marketplaceConfigurations'] ?? [],
             marketplaces: $data['marketplaces'] ?? [],

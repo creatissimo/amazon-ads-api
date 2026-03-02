@@ -20,9 +20,16 @@ final class CampaignCreate
         private ?string $purchaseOrderNumber = null,
         private ?string $skanAppId = null,
         private ?string $targetedPGDealId = null,
+        private ?CreateAutoCreationSettings $autoCreationSettings = null,
+        private ?CreateCampaignOptimizations $optimizations = null,
         private array $budgets = [],
         private array $countries = [],
+        private array $fees = [],
+        private array $flights = [],
+        private array $frequencies = [],
+        private array $marketplaceConfigurations = [],
         private array $marketplaces = [],
+        private array $siteRestrictions = [],
         private array $tags = [],
     ) {
     }
@@ -233,6 +240,100 @@ final class CampaignCreate
         return $this;
     }
 
+    public function getAutoCreationSettings(): ?CreateAutoCreationSettings
+    {
+        return $this->autoCreationSettings;
+    }
+
+    public function setAutoCreationSettings(?CreateAutoCreationSettings $autoCreationSettings): self
+    {
+        $this->autoCreationSettings = $autoCreationSettings;
+
+        return $this;
+    }
+
+    public function getOptimizations(): ?CreateCampaignOptimizations
+    {
+        return $this->optimizations;
+    }
+
+    public function setOptimizations(?CreateCampaignOptimizations $optimizations): self
+    {
+        $this->optimizations = $optimizations;
+
+        return $this;
+    }
+
+    /** @return CreateCampaignFee[] */
+    public function getFees(): array
+    {
+        return $this->fees;
+    }
+
+    /** @param CreateCampaignFee[] $fees */
+    public function setFees(array $fees): self
+    {
+        $this->fees = $fees;
+
+        return $this;
+    }
+
+    /** @return CreateCampaignFlight[] */
+    public function getFlights(): array
+    {
+        return $this->flights;
+    }
+
+    /** @param CreateCampaignFlight[] $flights */
+    public function setFlights(array $flights): self
+    {
+        $this->flights = $flights;
+
+        return $this;
+    }
+
+    /** @return CreateFrequency[] */
+    public function getFrequencies(): array
+    {
+        return $this->frequencies;
+    }
+
+    /** @param CreateFrequency[] $frequencies */
+    public function setFrequencies(array $frequencies): self
+    {
+        $this->frequencies = $frequencies;
+
+        return $this;
+    }
+
+    /** @return CreateMarketplaceCampaignConfigurations[] */
+    public function getMarketplaceConfigurations(): array
+    {
+        return $this->marketplaceConfigurations;
+    }
+
+    /** @param CreateMarketplaceCampaignConfigurations[] $marketplaceConfigurations */
+    public function setMarketplaceConfigurations(array $marketplaceConfigurations): self
+    {
+        $this->marketplaceConfigurations = $marketplaceConfigurations;
+
+        return $this;
+    }
+
+    /** @return SiteRestriction[] */
+    public function getSiteRestrictions(): array
+    {
+        return $this->siteRestrictions;
+    }
+
+    /** @param SiteRestriction[] $siteRestrictions */
+    public function setSiteRestrictions(array $siteRestrictions): self
+    {
+        $this->siteRestrictions = $siteRestrictions;
+
+        return $this;
+    }
+
     public function toArray(): array
     {
         $data = [
@@ -281,10 +382,49 @@ final class CampaignCreate
             $data['countries'] = $this->countries;
         }
         if ($this->marketplaces !== []) {
-            $data['marketplaces'] = $this->marketplaces;
+            $data['marketplaces'] = array_map(
+                static fn(Marketplace $m) => $m->value,
+                $this->marketplaces,
+            );
         }
         if ($this->tags !== []) {
             $data['tags'] = $this->tags;
+        }
+        if ($this->autoCreationSettings !== null) {
+            $data['autoCreationSettings'] = $this->autoCreationSettings->toArray();
+        }
+        if ($this->optimizations !== null) {
+            $data['optimizations'] = $this->optimizations->toArray();
+        }
+        if ($this->fees !== []) {
+            $data['fees'] = array_map(
+                static fn(CreateCampaignFee $f) => $f->toArray(),
+                $this->fees,
+            );
+        }
+        if ($this->flights !== []) {
+            $data['flights'] = array_map(
+                static fn(CreateCampaignFlight $f) => $f->toArray(),
+                $this->flights,
+            );
+        }
+        if ($this->frequencies !== []) {
+            $data['frequencies'] = array_map(
+                static fn(CreateFrequency $f) => $f->toArray(),
+                $this->frequencies,
+            );
+        }
+        if ($this->marketplaceConfigurations !== []) {
+            $data['marketplaceConfigurations'] = array_map(
+                static fn(CreateMarketplaceCampaignConfigurations $m) => $m->toArray(),
+                $this->marketplaceConfigurations,
+            );
+        }
+        if ($this->siteRestrictions !== []) {
+            $data['siteRestrictions'] = array_map(
+                static fn(SiteRestriction $s) => $s->value,
+                $this->siteRestrictions,
+            );
         }
 
         return $data;

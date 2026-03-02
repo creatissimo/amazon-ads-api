@@ -9,9 +9,12 @@ final class TargetUpdate
     public function __construct(
         private string $targetId,
         private ?State $state = null,
+        private ?string $campaignId = null,
+        private ?MarketplaceScope $marketplaceScope = null,
         private array $bid = [],
         private array $targetDetails = [],
         private array $marketplaceConfigurations = [],
+        private array $marketplaces = [],
         private array $tags = [],
     ) {
     }
@@ -36,6 +39,30 @@ final class TargetUpdate
     public function setState(?State $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    public function getCampaignId(): ?string
+    {
+        return $this->campaignId;
+    }
+
+    public function setCampaignId(?string $campaignId): self
+    {
+        $this->campaignId = $campaignId;
+
+        return $this;
+    }
+
+    public function getMarketplaceScope(): ?MarketplaceScope
+    {
+        return $this->marketplaceScope;
+    }
+
+    public function setMarketplaceScope(?MarketplaceScope $marketplaceScope): self
+    {
+        $this->marketplaceScope = $marketplaceScope;
 
         return $this;
     }
@@ -76,6 +103,20 @@ final class TargetUpdate
         return $this;
     }
 
+    /** @return Marketplace[] */
+    public function getMarketplaces(): array
+    {
+        return $this->marketplaces;
+    }
+
+    /** @param Marketplace[] $marketplaces */
+    public function setMarketplaces(array $marketplaces): self
+    {
+        $this->marketplaces = $marketplaces;
+
+        return $this;
+    }
+
     public function getTags(): array
     {
         return $this->tags;
@@ -97,6 +138,12 @@ final class TargetUpdate
         if ($this->state !== null) {
             $data['state'] = $this->state->value;
         }
+        if ($this->campaignId !== null) {
+            $data['campaignId'] = $this->campaignId;
+        }
+        if ($this->marketplaceScope !== null) {
+            $data['marketplaceScope'] = $this->marketplaceScope->value;
+        }
         if ($this->bid !== []) {
             $data['bid'] = $this->bid;
         }
@@ -105,6 +152,12 @@ final class TargetUpdate
         }
         if ($this->marketplaceConfigurations !== []) {
             $data['marketplaceConfigurations'] = $this->marketplaceConfigurations;
+        }
+        if ($this->marketplaces !== []) {
+            $data['marketplaces'] = array_map(
+                static fn(Marketplace $m) => $m->value,
+                $this->marketplaces,
+            );
         }
         if ($this->tags !== []) {
             $data['tags'] = $this->tags;

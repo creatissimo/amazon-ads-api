@@ -12,6 +12,7 @@ final class TargetSuccessResponse
     public function __construct(
         private array $targets,
         private ?string $nextToken = null,
+        private ?int $totalResults = null,
     ) {
     }
 
@@ -41,6 +42,18 @@ final class TargetSuccessResponse
         return $this;
     }
 
+    public function getTotalResults(): ?int
+    {
+        return $this->totalResults;
+    }
+
+    public function setTotalResults(?int $totalResults): self
+    {
+        $this->totalResults = $totalResults;
+
+        return $this;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(
@@ -49,6 +62,7 @@ final class TargetSuccessResponse
                 $data['targets'] ?? [],
             ),
             nextToken: $data['nextToken'] ?? null,
+            totalResults: isset($data['totalResults']) ? (int) $data['totalResults'] : null,
         );
     }
 }

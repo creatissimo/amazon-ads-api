@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\SBBrandedKeywordsPricingCreate;
+use Creatissimo\AmazonAdsApi\Model\SBBrandedKeywordsPricingMultiStatusResponse;
 
 final class BrandedKeywordsPricingsApi
 {
@@ -16,14 +17,18 @@ final class BrandedKeywordsPricingsApi
     ) {
     }
 
-    /** @param array[] $brandedKeywordsPricings */
-    public function create(array $brandedKeywordsPricings): MultiStatusResponse
+    /** @param SBBrandedKeywordsPricingCreate[] $brandedKeywordsPricings */
+    public function create(array $brandedKeywordsPricings): SBBrandedKeywordsPricingMultiStatusResponse
     {
-        $response = $this->httpClient->post(
-            self::PATH_CREATE,
-            ['brandedKeywordsPricings' => $brandedKeywordsPricings],
-        )->ensureMultiStatus();
+        $body = [
+            'brandedKeywordsPricings' => array_map(
+                static fn(SBBrandedKeywordsPricingCreate $p) => $p->toArray(),
+                $brandedKeywordsPricings,
+            ),
+        ];
 
-        return MultiStatusResponse::fromArray($response->getData());
+        $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
+
+        return SBBrandedKeywordsPricingMultiStatusResponse::fromArray($response->getData());
     }
 }

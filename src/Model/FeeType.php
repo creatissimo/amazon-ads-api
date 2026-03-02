@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Creatissimo\AmazonAdsApi\Model;
+
+enum FeeType: string
+{
+    case AMAZON_AUDIENCE = 'AMAZON_AUDIENCE';
+    case AMAZON_DSP = 'AMAZON_DSP';
+    case MANAGED_SERVICE_FEE = 'MANAGED_SERVICE_FEE';
+    case OMNICHANNEL_METRICS = 'OMNICHANNEL_METRICS';
+    case THIRD_PARTY_APPLIED = 'THIRD_PARTY_APPLIED';
+    case THIRD_PARTY_AUDIENCE = 'THIRD_PARTY_AUDIENCE';
+    case THIRD_PARTY_TARGETING = 'THIRD_PARTY_TARGETING';
+}

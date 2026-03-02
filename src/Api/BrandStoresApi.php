@@ -5,7 +5,15 @@ declare(strict_types=1);
 namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\BrandStoreEditionPublishVersionMultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\BrandStoreEditionPublishVersionSuccessResponse;
+use Creatissimo\AmazonAdsApi\Model\BrandStoreEditionPublishVersionUpdate;
+use Creatissimo\AmazonAdsApi\Model\BrandStoreEditionSuccessResponse;
+use Creatissimo\AmazonAdsApi\Model\BrandStorePageSuccessResponse;
+use Creatissimo\AmazonAdsApi\Model\BrandStoreSuccessResponse;
+use Creatissimo\AmazonAdsApi\Model\QueryBrandStoreEditionPublishVersionRequest;
+use Creatissimo\AmazonAdsApi\Model\QueryBrandStorePageRequest;
+use Creatissimo\AmazonAdsApi\Model\QueryBrandStoreRequest;
 
 final class BrandStoresApi
 {
@@ -20,39 +28,43 @@ final class BrandStoresApi
     ) {
     }
 
-    public function queryStores(array $filters): array
+    public function queryStores(QueryBrandStoreRequest $request): BrandStoreSuccessResponse
     {
-        $response = $this->httpClient->post(self::PATH_QUERY_STORES, $filters)->ensureSuccess();
+        $response = $this->httpClient->post(self::PATH_QUERY_STORES, $request->toArray())->ensureSuccess();
 
-        return $response->getData();
+        return BrandStoreSuccessResponse::fromArray($response->getData());
     }
 
-    public function queryPages(array $filters): array
+    public function queryPages(QueryBrandStorePageRequest $request): BrandStorePageSuccessResponse
     {
-        $response = $this->httpClient->post(self::PATH_QUERY_PAGES, $filters)->ensureSuccess();
+        $response = $this->httpClient->post(self::PATH_QUERY_PAGES, $request->toArray())->ensureSuccess();
 
-        return $response->getData();
+        return BrandStorePageSuccessResponse::fromArray($response->getData());
     }
 
-    public function queryEditionPublishVersions(array $filters): array
+    public function queryEditionPublishVersions(QueryBrandStoreEditionPublishVersionRequest $request): BrandStoreEditionPublishVersionSuccessResponse
     {
-        $response = $this->httpClient->post(self::PATH_QUERY_PUBLISH_VERSIONS, $filters)->ensureSuccess();
+        $response = $this->httpClient->post(self::PATH_QUERY_PUBLISH_VERSIONS, $request->toArray())->ensureSuccess();
 
-        return $response->getData();
+        return BrandStoreEditionPublishVersionSuccessResponse::fromArray($response->getData());
     }
 
-    /** @param array[] $publishVersions */
-    public function updateEditionPublishVersions(array $publishVersions): MultiStatusResponse
+    /** @param BrandStoreEditionPublishVersionUpdate[] $publishVersions */
+    public function updateEditionPublishVersions(array $publishVersions): BrandStoreEditionPublishVersionMultiStatusResponse
     {
-        $response = $this->httpClient->post(
-            self::PATH_UPDATE_PUBLISH_VERSIONS,
-            ['brandStoreEditionPublishVersions' => $publishVersions],
-        )->ensureMultiStatus();
+        $body = [
+            'brandStoreEditionPublishVersions' => array_map(
+                static fn(BrandStoreEditionPublishVersionUpdate $v) => $v->toArray(),
+                $publishVersions,
+            ),
+        ];
 
-        return MultiStatusResponse::fromArray($response->getData());
+        $response = $this->httpClient->post(self::PATH_UPDATE_PUBLISH_VERSIONS, $body)->ensureMultiStatus();
+
+        return BrandStoreEditionPublishVersionMultiStatusResponse::fromArray($response->getData());
     }
 
-    public function listEditions(?string $storeId = null, ?string $nextToken = null, ?int $maxResults = null): array
+    public function listEditions(?string $storeId = null, ?string $nextToken = null, ?int $maxResults = null): BrandStoreEditionSuccessResponse
     {
         $query = [];
 
@@ -74,6 +86,6 @@ final class BrandStoresApi
 
         $response = $this->httpClient->get($path)->ensureSuccess();
 
-        return $response->getData();
+        return BrandStoreEditionSuccessResponse::fromArray($response->getData());
     }
 }
