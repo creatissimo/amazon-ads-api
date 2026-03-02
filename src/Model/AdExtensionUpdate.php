@@ -8,8 +8,8 @@ final class AdExtensionUpdate
 {
     public function __construct(
         private string $adExtensionId,
-        private ?UpdateState $state = null,
         private array $marketplaces = [],
+        private ?UpdateState $state = null,
     ) {
     }
 
@@ -21,6 +21,20 @@ final class AdExtensionUpdate
     public function setAdExtensionId(string $adExtensionId): self
     {
         $this->adExtensionId = $adExtensionId;
+
+        return $this;
+    }
+
+    /** @return Marketplace[] */
+    public function getMarketplaces(): array
+    {
+        return $this->marketplaces;
+    }
+
+    /** @param Marketplace[] $marketplaces */
+    public function setMarketplaces(array $marketplaces): self
+    {
+        $this->marketplaces = $marketplaces;
 
         return $this;
     }
@@ -37,32 +51,34 @@ final class AdExtensionUpdate
         return $this;
     }
 
-    public function getMarketplaces(): array
-    {
-        return $this->marketplaces;
-    }
-
-    public function setMarketplaces(array $marketplaces): self
-    {
-        $this->marketplaces = $marketplaces;
-
-        return $this;
-    }
-
     public function toArray(): array
     {
         $data = [
             'adExtensionId' => $this->adExtensionId,
         ];
 
+        if ($this->marketplaces !== []) {
+            $data['marketplaces'] = array_map(
+                static fn(Marketplace $v) => $v->value,
+                $this->marketplaces,
+            );
+        }
         if ($this->state !== null) {
             $data['state'] = $this->state->value;
-        }
-        if ($this->marketplaces !== []) {
-            $data['marketplaces'] = $this->marketplaces;
         }
 
         return $data;
     }
-}
 
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            adExtensionId: $data['adExtensionId'],
+            marketplaces: array_map(
+                static fn(string $v) => Marketplace::from($v),
+                $data['marketplaces'] ?? [],
+            ),
+            state: isset($data['state']) ? UpdateState::from($data['state']) : null,
+        );
+    }
+}

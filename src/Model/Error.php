@@ -7,18 +7,18 @@ namespace Creatissimo\AmazonAdsApi\Model;
 final class Error
 {
     public function __construct(
-        private string $code,
+        private ErrorCode $code,
         private string $message,
         private ?string $fieldLocation = null,
     ) {
     }
 
-    public function getCode(): string
+    public function getCode(): ErrorCode
     {
         return $this->code;
     }
 
-    public function setCode(string $code): self
+    public function setCode(ErrorCode $code): self
     {
         $this->code = $code;
 
@@ -52,8 +52,8 @@ final class Error
     public static function fromArray(array $data): self
     {
         return new self(
-            code: $data['code'] ?? '',
-            message: $data['message'] ?? '',
+            code: ErrorCode::from($data['code']),
+            message: $data['message'],
             fieldLocation: $data['fieldLocation'] ?? null,
         );
     }

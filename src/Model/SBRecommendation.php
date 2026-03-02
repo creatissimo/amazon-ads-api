@@ -10,7 +10,7 @@ final class SBRecommendation
         private string $recommendationId,
         private string $recommendationType,
         private array $recommendedObjects,
-        private mixed $recommendationTypeDetails = null,
+        private ?SBRecommendationTypeDetails $recommendationTypeDetails = null,
     ) {
     }
 
@@ -52,12 +52,12 @@ final class SBRecommendation
         return $this;
     }
 
-    public function getRecommendationTypeDetails(): mixed
+    public function getRecommendationTypeDetails(): ?SBRecommendationTypeDetails
     {
         return $this->recommendationTypeDetails;
     }
 
-    public function setRecommendationTypeDetails(mixed $recommendationTypeDetails): self
+    public function setRecommendationTypeDetails(?SBRecommendationTypeDetails $recommendationTypeDetails): self
     {
         $this->recommendationTypeDetails = $recommendationTypeDetails;
 
@@ -73,7 +73,7 @@ final class SBRecommendation
                 static fn(array $v) => SBRecommendedObject::fromArray($v),
                 $data['recommendedObjects'] ?? [],
             ),
-            recommendationTypeDetails: $data['recommendationTypeDetails'] ?? null,
+            recommendationTypeDetails: isset($data['recommendationTypeDetails']) ? SBRecommendationTypeDetails::fromArray($data['recommendationTypeDetails']) : null,
         );
     }
 }

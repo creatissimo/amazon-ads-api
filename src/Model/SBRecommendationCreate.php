@@ -8,7 +8,7 @@ final class SBRecommendationCreate
 {
     public function __construct(
         private string $recommendationType,
-        private mixed $recommendationTypeDetails = null,
+        private ?SBCreateRecommendationTypeDetails $recommendationTypeDetails = null,
     ) {
     }
 
@@ -24,12 +24,12 @@ final class SBRecommendationCreate
         return $this;
     }
 
-    public function getRecommendationTypeDetails(): mixed
+    public function getRecommendationTypeDetails(): ?SBCreateRecommendationTypeDetails
     {
         return $this->recommendationTypeDetails;
     }
 
-    public function setRecommendationTypeDetails(mixed $recommendationTypeDetails): self
+    public function setRecommendationTypeDetails(?SBCreateRecommendationTypeDetails $recommendationTypeDetails): self
     {
         $this->recommendationTypeDetails = $recommendationTypeDetails;
 
@@ -43,7 +43,7 @@ final class SBRecommendationCreate
         ];
 
         if ($this->recommendationTypeDetails !== null) {
-            $data['recommendationTypeDetails'] = $this->recommendationTypeDetails;
+            $data['recommendationTypeDetails'] = $this->recommendationTypeDetails->toArray();
         }
 
         return $data;
@@ -53,7 +53,7 @@ final class SBRecommendationCreate
     {
         return new self(
             recommendationType: $data['recommendationType'],
-            recommendationTypeDetails: $data['recommendationTypeDetails'] ?? null,
+            recommendationTypeDetails: isset($data['recommendationTypeDetails']) ? SBCreateRecommendationTypeDetails::fromArray($data['recommendationTypeDetails']) : null,
         );
     }
 }

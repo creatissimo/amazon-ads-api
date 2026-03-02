@@ -10,18 +10,19 @@ final class Ad
         private string $adId,
         private AdProduct $adProduct,
         private AdType $adType,
-        private State $state,
         private string $creationDateTime,
+        private string $creative,
         private string $lastUpdatedDateTime,
-        private array $creative = [],
+        private State $state,
+        private ?string $activeCreative = null,
         private ?string $adGroupId = null,
         private ?string $campaignId = null,
-        private ?string $name = null,
         private ?string $globalAdId = null,
-        private ?MarketplaceScope $marketplaceScope = null,
-        private ?array $activeCreative = null,
         private array $marketplaceConfigurations = [],
+        private ?MarketplaceScope $marketplaceScope = null,
         private array $marketplaces = [],
+        private ?string $name = null,
+        private ?Status $status = null,
         private array $tags = [],
     ) {
     }
@@ -62,18 +63,6 @@ final class Ad
         return $this;
     }
 
-    public function getState(): State
-    {
-        return $this->state;
-    }
-
-    public function setState(State $state): self
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
     public function getCreationDateTime(): string
     {
         return $this->creationDateTime;
@@ -82,6 +71,18 @@ final class Ad
     public function setCreationDateTime(string $creationDateTime): self
     {
         $this->creationDateTime = $creationDateTime;
+
+        return $this;
+    }
+
+    public function getCreative(): string
+    {
+        return $this->creative;
+    }
+
+    public function setCreative(string $creative): self
+    {
+        $this->creative = $creative;
 
         return $this;
     }
@@ -98,14 +99,26 @@ final class Ad
         return $this;
     }
 
-    public function getCreative(): array
+    public function getState(): State
     {
-        return $this->creative;
+        return $this->state;
     }
 
-    public function setCreative(array $creative): self
+    public function setState(State $state): self
     {
-        $this->creative = $creative;
+        $this->state = $state;
+
+        return $this;
+    }
+
+    public function getActiveCreative(): ?string
+    {
+        return $this->activeCreative;
+    }
+
+    public function setActiveCreative(?string $activeCreative): self
+    {
+        $this->activeCreative = $activeCreative;
 
         return $this;
     }
@@ -134,18 +147,6 @@ final class Ad
         return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getGlobalAdId(): ?string
     {
         return $this->globalAdId;
@@ -154,6 +155,20 @@ final class Ad
     public function setGlobalAdId(?string $globalAdId): self
     {
         $this->globalAdId = $globalAdId;
+
+        return $this;
+    }
+
+    /** @return MarketplaceAdConfigurations[] */
+    public function getMarketplaceConfigurations(): array
+    {
+        return $this->marketplaceConfigurations;
+    }
+
+    /** @param MarketplaceAdConfigurations[] $marketplaceConfigurations */
+    public function setMarketplaceConfigurations(array $marketplaceConfigurations): self
+    {
+        $this->marketplaceConfigurations = $marketplaceConfigurations;
 
         return $this;
     }
@@ -170,35 +185,13 @@ final class Ad
         return $this;
     }
 
-    public function getActiveCreative(): ?array
-    {
-        return $this->activeCreative;
-    }
-
-    public function setActiveCreative(?array $activeCreative): self
-    {
-        $this->activeCreative = $activeCreative;
-
-        return $this;
-    }
-
-    public function getMarketplaceConfigurations(): array
-    {
-        return $this->marketplaceConfigurations;
-    }
-
-    public function setMarketplaceConfigurations(array $marketplaceConfigurations): self
-    {
-        $this->marketplaceConfigurations = $marketplaceConfigurations;
-
-        return $this;
-    }
-
+    /** @return Marketplace[] */
     public function getMarketplaces(): array
     {
         return $this->marketplaces;
     }
 
+    /** @param Marketplace[] $marketplaces */
     public function setMarketplaces(array $marketplaces): self
     {
         $this->marketplaces = $marketplaces;
@@ -206,11 +199,37 @@ final class Ad
         return $this;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /** @return Tag[] */
     public function getTags(): array
     {
         return $this->tags;
     }
 
+    /** @param Tag[] $tags */
     public function setTags(array $tags): self
     {
         $this->tags = $tags;
@@ -224,20 +243,29 @@ final class Ad
             adId: $data['adId'],
             adProduct: AdProduct::from($data['adProduct']),
             adType: AdType::from($data['adType']),
-            state: State::from($data['state']),
             creationDateTime: $data['creationDateTime'],
+            creative: $data['creative'],
             lastUpdatedDateTime: $data['lastUpdatedDateTime'],
-            creative: $data['creative'] ?? [],
+            state: State::from($data['state']),
+            activeCreative: $data['activeCreative'] ?? null,
             adGroupId: $data['adGroupId'] ?? null,
             campaignId: $data['campaignId'] ?? null,
-            name: $data['name'] ?? null,
             globalAdId: $data['globalAdId'] ?? null,
+            marketplaceConfigurations: array_map(
+                static fn(array $v) => MarketplaceAdConfigurations::fromArray($v),
+                $data['marketplaceConfigurations'] ?? [],
+            ),
             marketplaceScope: isset($data['marketplaceScope']) ? MarketplaceScope::from($data['marketplaceScope']) : null,
-            activeCreative: $data['activeCreative'] ?? null,
-            marketplaceConfigurations: $data['marketplaceConfigurations'] ?? [],
-            marketplaces: $data['marketplaces'] ?? [],
-            tags: $data['tags'] ?? [],
+            marketplaces: array_map(
+                static fn(string $v) => Marketplace::from($v),
+                $data['marketplaces'] ?? [],
+            ),
+            name: $data['name'] ?? null,
+            status: isset($data['status']) ? Status::fromArray($data['status']) : null,
+            tags: array_map(
+                static fn(array $v) => Tag::fromArray($v),
+                $data['tags'] ?? [],
+            ),
         );
     }
 }
-

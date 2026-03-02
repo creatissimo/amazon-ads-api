@@ -8,7 +8,7 @@ final class SBAdvertisingDealTargetCreate
 {
     public function __construct(
         private string $advertisingDealId,
-        private mixed $targetDetails,
+        private SBCreateAdvertisingDealTargetDetails $targetDetails,
         private SBAdvertisingDealTargetType $targetType,
     ) {
     }
@@ -25,12 +25,12 @@ final class SBAdvertisingDealTargetCreate
         return $this;
     }
 
-    public function getTargetDetails(): mixed
+    public function getTargetDetails(): SBCreateAdvertisingDealTargetDetails
     {
         return $this->targetDetails;
     }
 
-    public function setTargetDetails(mixed $targetDetails): self
+    public function setTargetDetails(SBCreateAdvertisingDealTargetDetails $targetDetails): self
     {
         $this->targetDetails = $targetDetails;
 
@@ -51,21 +51,18 @@ final class SBAdvertisingDealTargetCreate
 
     public function toArray(): array
     {
-        $data = [
+        return [
             'advertisingDealId' => $this->advertisingDealId,
-            'targetDetails' => $this->targetDetails,
+            'targetDetails' => $this->targetDetails->toArray(),
             'targetType' => $this->targetType->value,
         ];
-
-
-        return $data;
     }
 
     public static function fromArray(array $data): self
     {
         return new self(
             advertisingDealId: $data['advertisingDealId'],
-            targetDetails: $data['targetDetails'],
+            targetDetails: SBCreateAdvertisingDealTargetDetails::fromArray($data['targetDetails']),
             targetType: SBAdvertisingDealTargetType::from($data['targetType']),
         );
     }

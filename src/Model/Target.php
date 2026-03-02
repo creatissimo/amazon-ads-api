@@ -7,37 +7,25 @@ namespace Creatissimo\AmazonAdsApi\Model;
 final class Target
 {
     public function __construct(
-        private string $targetId,
         private AdProduct $adProduct,
-        private string $targetType,
-        private State $state,
-        private bool $negative,
         private string $creationDateTime,
         private string $lastUpdatedDateTime,
-        private array $targetDetails = [],
+        private bool $negative,
+        private State $state,
+        private string $targetDetails,
+        private string $targetId,
+        private TargetType $targetType,
         private ?string $adGroupId = null,
+        private ?TargetBid $bid = null,
         private ?string $campaignId = null,
         private ?string $globalTargetId = null,
-        private ?string $targetLevel = null,
-        private ?MarketplaceScope $marketplaceScope = null,
-        private ?Status $status = null,
-        private array $bid = [],
         private array $marketplaceConfigurations = [],
+        private ?MarketplaceScope $marketplaceScope = null,
         private array $marketplaces = [],
+        private ?Status $status = null,
         private array $tags = [],
+        private ?TargetLevel $targetLevel = null,
     ) {
-    }
-
-    public function getTargetId(): string
-    {
-        return $this->targetId;
-    }
-
-    public function setTargetId(string $targetId): self
-    {
-        $this->targetId = $targetId;
-
-        return $this;
     }
 
     public function getAdProduct(): AdProduct
@@ -48,42 +36,6 @@ final class Target
     public function setAdProduct(AdProduct $adProduct): self
     {
         $this->adProduct = $adProduct;
-
-        return $this;
-    }
-
-    public function getTargetType(): string
-    {
-        return $this->targetType;
-    }
-
-    public function setTargetType(string $targetType): self
-    {
-        $this->targetType = $targetType;
-
-        return $this;
-    }
-
-    public function getState(): State
-    {
-        return $this->state;
-    }
-
-    public function setState(State $state): self
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    public function isNegative(): bool
-    {
-        return $this->negative;
-    }
-
-    public function setNegative(bool $negative): self
-    {
-        $this->negative = $negative;
 
         return $this;
     }
@@ -112,14 +64,62 @@ final class Target
         return $this;
     }
 
-    public function getTargetDetails(): array
+    public function isNegative(): bool
+    {
+        return $this->negative;
+    }
+
+    public function setNegative(bool $negative): self
+    {
+        $this->negative = $negative;
+
+        return $this;
+    }
+
+    public function getState(): State
+    {
+        return $this->state;
+    }
+
+    public function setState(State $state): self
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    public function getTargetDetails(): string
     {
         return $this->targetDetails;
     }
 
-    public function setTargetDetails(array $targetDetails): self
+    public function setTargetDetails(string $targetDetails): self
     {
         $this->targetDetails = $targetDetails;
+
+        return $this;
+    }
+
+    public function getTargetId(): string
+    {
+        return $this->targetId;
+    }
+
+    public function setTargetId(string $targetId): self
+    {
+        $this->targetId = $targetId;
+
+        return $this;
+    }
+
+    public function getTargetType(): TargetType
+    {
+        return $this->targetType;
+    }
+
+    public function setTargetType(TargetType $targetType): self
+    {
+        $this->targetType = $targetType;
 
         return $this;
     }
@@ -132,6 +132,18 @@ final class Target
     public function setAdGroupId(?string $adGroupId): self
     {
         $this->adGroupId = $adGroupId;
+
+        return $this;
+    }
+
+    public function getBid(): ?TargetBid
+    {
+        return $this->bid;
+    }
+
+    public function setBid(?TargetBid $bid): self
+    {
+        $this->bid = $bid;
 
         return $this;
     }
@@ -160,14 +172,16 @@ final class Target
         return $this;
     }
 
-    public function getTargetLevel(): ?string
+    /** @return MarketplaceTargetConfigurations[] */
+    public function getMarketplaceConfigurations(): array
     {
-        return $this->targetLevel;
+        return $this->marketplaceConfigurations;
     }
 
-    public function setTargetLevel(?string $targetLevel): self
+    /** @param MarketplaceTargetConfigurations[] $marketplaceConfigurations */
+    public function setMarketplaceConfigurations(array $marketplaceConfigurations): self
     {
-        $this->targetLevel = $targetLevel;
+        $this->marketplaceConfigurations = $marketplaceConfigurations;
 
         return $this;
     }
@@ -184,6 +198,20 @@ final class Target
         return $this;
     }
 
+    /** @return Marketplace[] */
+    public function getMarketplaces(): array
+    {
+        return $this->marketplaces;
+    }
+
+    /** @param Marketplace[] $marketplaces */
+    public function setMarketplaces(array $marketplaces): self
+    {
+        $this->marketplaces = $marketplaces;
+
+        return $this;
+    }
+
     public function getStatus(): ?Status
     {
         return $this->status;
@@ -196,47 +224,13 @@ final class Target
         return $this;
     }
 
-    public function getBid(): array
-    {
-        return $this->bid;
-    }
-
-    public function setBid(array $bid): self
-    {
-        $this->bid = $bid;
-
-        return $this;
-    }
-
-    public function getMarketplaceConfigurations(): array
-    {
-        return $this->marketplaceConfigurations;
-    }
-
-    public function setMarketplaceConfigurations(array $marketplaceConfigurations): self
-    {
-        $this->marketplaceConfigurations = $marketplaceConfigurations;
-
-        return $this;
-    }
-
-    public function getMarketplaces(): array
-    {
-        return $this->marketplaces;
-    }
-
-    public function setMarketplaces(array $marketplaces): self
-    {
-        $this->marketplaces = $marketplaces;
-
-        return $this;
-    }
-
+    /** @return Tag[] */
     public function getTags(): array
     {
         return $this->tags;
     }
 
+    /** @param Tag[] $tags */
     public function setTags(array $tags): self
     {
         $this->tags = $tags;
@@ -244,28 +238,48 @@ final class Target
         return $this;
     }
 
+    public function getTargetLevel(): ?TargetLevel
+    {
+        return $this->targetLevel;
+    }
+
+    public function setTargetLevel(?TargetLevel $targetLevel): self
+    {
+        $this->targetLevel = $targetLevel;
+
+        return $this;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(
-            targetId: $data['targetId'],
             adProduct: AdProduct::from($data['adProduct']),
-            targetType: $data['targetType'],
-            state: State::from($data['state']),
-            negative: $data['negative'],
             creationDateTime: $data['creationDateTime'],
             lastUpdatedDateTime: $data['lastUpdatedDateTime'],
-            targetDetails: $data['targetDetails'] ?? [],
+            negative: (bool) $data['negative'],
+            state: State::from($data['state']),
+            targetDetails: $data['targetDetails'],
+            targetId: $data['targetId'],
+            targetType: TargetType::from($data['targetType']),
             adGroupId: $data['adGroupId'] ?? null,
+            bid: isset($data['bid']) ? TargetBid::fromArray($data['bid']) : null,
             campaignId: $data['campaignId'] ?? null,
             globalTargetId: $data['globalTargetId'] ?? null,
-            targetLevel: $data['targetLevel'] ?? null,
+            marketplaceConfigurations: array_map(
+                static fn(array $v) => MarketplaceTargetConfigurations::fromArray($v),
+                $data['marketplaceConfigurations'] ?? [],
+            ),
             marketplaceScope: isset($data['marketplaceScope']) ? MarketplaceScope::from($data['marketplaceScope']) : null,
+            marketplaces: array_map(
+                static fn(string $v) => Marketplace::from($v),
+                $data['marketplaces'] ?? [],
+            ),
             status: isset($data['status']) ? Status::fromArray($data['status']) : null,
-            bid: $data['bid'] ?? [],
-            marketplaceConfigurations: $data['marketplaceConfigurations'] ?? [],
-            marketplaces: $data['marketplaces'] ?? [],
-            tags: $data['tags'] ?? [],
+            tags: array_map(
+                static fn(array $v) => Tag::fromArray($v),
+                $data['tags'] ?? [],
+            ),
+            targetLevel: isset($data['targetLevel']) ? TargetLevel::from($data['targetLevel']) : null,
         );
     }
 }
-

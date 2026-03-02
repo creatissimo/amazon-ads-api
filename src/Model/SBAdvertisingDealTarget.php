@@ -9,7 +9,7 @@ final class SBAdvertisingDealTarget
     public function __construct(
         private string $advertisingDealId,
         private string $advertisingDealTargetId,
-        private mixed $targetDetails,
+        private SBAdvertisingDealTargetDetails $targetDetails,
         private SBAdvertisingDealTargetType $targetType,
     ) {
     }
@@ -38,12 +38,12 @@ final class SBAdvertisingDealTarget
         return $this;
     }
 
-    public function getTargetDetails(): mixed
+    public function getTargetDetails(): SBAdvertisingDealTargetDetails
     {
         return $this->targetDetails;
     }
 
-    public function setTargetDetails(mixed $targetDetails): self
+    public function setTargetDetails(SBAdvertisingDealTargetDetails $targetDetails): self
     {
         $this->targetDetails = $targetDetails;
 
@@ -67,7 +67,7 @@ final class SBAdvertisingDealTarget
         return new self(
             advertisingDealId: $data['advertisingDealId'],
             advertisingDealTargetId: $data['advertisingDealTargetId'],
-            targetDetails: $data['targetDetails'],
+            targetDetails: SBAdvertisingDealTargetDetails::fromArray($data['targetDetails']),
             targetType: SBAdvertisingDealTargetType::from($data['targetType']),
         );
     }

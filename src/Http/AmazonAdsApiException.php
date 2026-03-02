@@ -9,10 +9,10 @@ use RuntimeException;
 final class AmazonAdsApiException extends RuntimeException
 {
     public function __construct(
-        private readonly int $httpStatusCode,
+        private readonly int     $httpStatusCode,
         private readonly ?string $responseCode,
         private readonly ?string $responseMessage,
-        private readonly array $responseBody,
+        private readonly array   $responseBody,
     ) {
         $parts = ["HTTP {$this->httpStatusCode}"];
 
@@ -53,8 +53,8 @@ final class AmazonAdsApiException extends RuntimeException
 
         return new self(
             httpStatusCode: $response->getStatusCode(),
-            responseCode: $data['code'] ?? null,
-            responseMessage: $data['message'] ?? null,
+            responseCode: $data['code'] ?? $data['Code'] ?? null,
+            responseMessage: $data['message'] ?? $data['Message'] ?? null,
             responseBody: $data,
         );
     }

@@ -9,23 +9,23 @@ final class CampaignUpdate
     public function __construct(
         private string $campaignId,
         private ?AdProduct $adProduct = null,
-        private ?State $state = null,
-        private ?string $name = null,
-        private ?CostType $costType = null,
-        private ?string $startDateTime = null,
-        private ?string $endDateTime = null,
-        private ?string $portfolioId = null,
-        private ?string $purchaseOrderNumber = null,
-        private ?string $skanAppId = null,
-        private ?UpdateCampaignOptimizations $optimizations = null,
         private array $budgets = [],
+        private ?CostType $costType = null,
         private array $countries = [],
+        private ?string $endDateTime = null,
         private array $fees = [],
         private array $flights = [],
         private array $frequencies = [],
         private array $marketplaceConfigurations = [],
         private array $marketplaces = [],
+        private ?string $name = null,
+        private ?UpdateCampaignOptimizations $optimizations = null,
+        private ?string $portfolioId = null,
+        private ?string $purchaseOrderNumber = null,
         private array $siteRestrictions = [],
+        private ?string $skanAppId = null,
+        private ?string $startDateTime = null,
+        private ?UpdateState $state = null,
         private array $tags = [],
     ) {
     }
@@ -54,26 +54,16 @@ final class CampaignUpdate
         return $this;
     }
 
-    public function getState(): ?State
+    /** @return CreateBudget[] */
+    public function getBudgets(): array
     {
-        return $this->state;
+        return $this->budgets;
     }
 
-    public function setState(?State $state): self
+    /** @param CreateBudget[] $budgets */
+    public function setBudgets(array $budgets): self
     {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
+        $this->budgets = $budgets;
 
         return $this;
     }
@@ -90,14 +80,16 @@ final class CampaignUpdate
         return $this;
     }
 
-    public function getStartDateTime(): ?string
+    /** @return CountryCode[] */
+    public function getCountries(): array
     {
-        return $this->startDateTime;
+        return $this->countries;
     }
 
-    public function setStartDateTime(?string $startDateTime): self
+    /** @param CountryCode[] $countries */
+    public function setCountries(array $countries): self
     {
-        $this->startDateTime = $startDateTime;
+        $this->countries = $countries;
 
         return $this;
     }
@@ -110,80 +102,6 @@ final class CampaignUpdate
     public function setEndDateTime(?string $endDateTime): self
     {
         $this->endDateTime = $endDateTime;
-
-        return $this;
-    }
-
-    public function getPortfolioId(): ?string
-    {
-        return $this->portfolioId;
-    }
-
-    public function setPortfolioId(?string $portfolioId): self
-    {
-        $this->portfolioId = $portfolioId;
-
-        return $this;
-    }
-
-    public function getPurchaseOrderNumber(): ?string
-    {
-        return $this->purchaseOrderNumber;
-    }
-
-    public function setPurchaseOrderNumber(?string $purchaseOrderNumber): self
-    {
-        $this->purchaseOrderNumber = $purchaseOrderNumber;
-
-        return $this;
-    }
-
-    /** @return Budget[] */
-    public function getBudgets(): array
-    {
-        return $this->budgets;
-    }
-
-    /** @param Budget[] $budgets */
-    public function setBudgets(array $budgets): self
-    {
-        $this->budgets = $budgets;
-
-        return $this;
-    }
-
-    public function getCountries(): array
-    {
-        return $this->countries;
-    }
-
-    public function setCountries(array $countries): self
-    {
-        $this->countries = $countries;
-
-        return $this;
-    }
-
-    public function getSkanAppId(): ?string
-    {
-        return $this->skanAppId;
-    }
-
-    public function setSkanAppId(?string $skanAppId): self
-    {
-        $this->skanAppId = $skanAppId;
-
-        return $this;
-    }
-
-    public function getOptimizations(): ?UpdateCampaignOptimizations
-    {
-        return $this->optimizations;
-    }
-
-    public function setOptimizations(?UpdateCampaignOptimizations $optimizations): self
-    {
-        $this->optimizations = $optimizations;
 
         return $this;
     }
@@ -258,6 +176,54 @@ final class CampaignUpdate
         return $this;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getOptimizations(): ?UpdateCampaignOptimizations
+    {
+        return $this->optimizations;
+    }
+
+    public function setOptimizations(?UpdateCampaignOptimizations $optimizations): self
+    {
+        $this->optimizations = $optimizations;
+
+        return $this;
+    }
+
+    public function getPortfolioId(): ?string
+    {
+        return $this->portfolioId;
+    }
+
+    public function setPortfolioId(?string $portfolioId): self
+    {
+        $this->portfolioId = $portfolioId;
+
+        return $this;
+    }
+
+    public function getPurchaseOrderNumber(): ?string
+    {
+        return $this->purchaseOrderNumber;
+    }
+
+    public function setPurchaseOrderNumber(?string $purchaseOrderNumber): self
+    {
+        $this->purchaseOrderNumber = $purchaseOrderNumber;
+
+        return $this;
+    }
+
     /** @return SiteRestriction[] */
     public function getSiteRestrictions(): array
     {
@@ -268,6 +234,42 @@ final class CampaignUpdate
     public function setSiteRestrictions(array $siteRestrictions): self
     {
         $this->siteRestrictions = $siteRestrictions;
+
+        return $this;
+    }
+
+    public function getSkanAppId(): ?string
+    {
+        return $this->skanAppId;
+    }
+
+    public function setSkanAppId(?string $skanAppId): self
+    {
+        $this->skanAppId = $skanAppId;
+
+        return $this;
+    }
+
+    public function getStartDateTime(): ?string
+    {
+        return $this->startDateTime;
+    }
+
+    public function setStartDateTime(?string $startDateTime): self
+    {
+        $this->startDateTime = $startDateTime;
+
+        return $this;
+    }
+
+    public function getState(): ?UpdateState
+    {
+        return $this->state;
+    }
+
+    public function setState(?UpdateState $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }
@@ -295,20 +297,59 @@ final class CampaignUpdate
         if ($this->adProduct !== null) {
             $data['adProduct'] = $this->adProduct->value;
         }
-        if ($this->state !== null) {
-            $data['state'] = $this->state->value;
-        }
-        if ($this->name !== null) {
-            $data['name'] = $this->name;
+        if ($this->budgets !== []) {
+            $data['budgets'] = array_map(
+                static fn(CreateBudget $v) => $v->toArray(),
+                $this->budgets,
+            );
         }
         if ($this->costType !== null) {
             $data['costType'] = $this->costType->value;
         }
-        if ($this->startDateTime !== null) {
-            $data['startDateTime'] = $this->startDateTime;
+        if ($this->countries !== []) {
+            $data['countries'] = array_map(
+                static fn(CountryCode $v) => $v->value,
+                $this->countries,
+            );
         }
         if ($this->endDateTime !== null) {
             $data['endDateTime'] = $this->endDateTime;
+        }
+        if ($this->fees !== []) {
+            $data['fees'] = array_map(
+                static fn(CreateCampaignFee $v) => $v->toArray(),
+                $this->fees,
+            );
+        }
+        if ($this->flights !== []) {
+            $data['flights'] = array_map(
+                static fn(CreateCampaignFlight $v) => $v->toArray(),
+                $this->flights,
+            );
+        }
+        if ($this->frequencies !== []) {
+            $data['frequencies'] = array_map(
+                static fn(CreateFrequency $v) => $v->toArray(),
+                $this->frequencies,
+            );
+        }
+        if ($this->marketplaceConfigurations !== []) {
+            $data['marketplaceConfigurations'] = array_map(
+                static fn(CreateMarketplaceCampaignConfigurations $v) => $v->toArray(),
+                $this->marketplaceConfigurations,
+            );
+        }
+        if ($this->marketplaces !== []) {
+            $data['marketplaces'] = array_map(
+                static fn(Marketplace $v) => $v->value,
+                $this->marketplaces,
+            );
+        }
+        if ($this->name !== null) {
+            $data['name'] = $this->name;
+        }
+        if ($this->optimizations !== null) {
+            $data['optimizations'] = $this->optimizations->toArray();
         }
         if ($this->portfolioId !== null) {
             $data['portfolioId'] = $this->portfolioId;
@@ -316,64 +357,81 @@ final class CampaignUpdate
         if ($this->purchaseOrderNumber !== null) {
             $data['purchaseOrderNumber'] = $this->purchaseOrderNumber;
         }
-        if ($this->skanAppId !== null) {
-            $data['skanAppId'] = $this->skanAppId;
-        }
-        if ($this->optimizations !== null) {
-            $data['optimizations'] = $this->optimizations->toArray();
-        }
-        if ($this->budgets !== []) {
-            $data['budgets'] = array_map(
-                static fn(Budget $b) => $b->toArray(),
-                $this->budgets,
-            );
-        }
-        if ($this->countries !== []) {
-            $data['countries'] = $this->countries;
-        }
-        if ($this->fees !== []) {
-            $data['fees'] = array_map(
-                static fn(CreateCampaignFee $f) => $f->toArray(),
-                $this->fees,
-            );
-        }
-        if ($this->flights !== []) {
-            $data['flights'] = array_map(
-                static fn(CreateCampaignFlight $f) => $f->toArray(),
-                $this->flights,
-            );
-        }
-        if ($this->frequencies !== []) {
-            $data['frequencies'] = array_map(
-                static fn(CreateFrequency $f) => $f->toArray(),
-                $this->frequencies,
-            );
-        }
-        if ($this->marketplaceConfigurations !== []) {
-            $data['marketplaceConfigurations'] = array_map(
-                static fn(CreateMarketplaceCampaignConfigurations $m) => $m->toArray(),
-                $this->marketplaceConfigurations,
-            );
-        }
-        if ($this->marketplaces !== []) {
-            $data['marketplaces'] = array_map(
-                static fn(Marketplace $m) => $m->value,
-                $this->marketplaces,
-            );
-        }
         if ($this->siteRestrictions !== []) {
             $data['siteRestrictions'] = array_map(
-                static fn(SiteRestriction $s) => $s->value,
+                static fn(SiteRestriction $v) => $v->value,
                 $this->siteRestrictions,
             );
         }
+        if ($this->skanAppId !== null) {
+            $data['skanAppId'] = $this->skanAppId;
+        }
+        if ($this->startDateTime !== null) {
+            $data['startDateTime'] = $this->startDateTime;
+        }
+        if ($this->state !== null) {
+            $data['state'] = $this->state->value;
+        }
         if ($this->tags !== []) {
             $data['tags'] = array_map(
-                static fn(CreateTag $t) => $t->toArray(),
+                static fn(CreateTag $v) => $v->toArray(),
                 $this->tags,
             );
         }
 
         return $data;
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            campaignId: $data['campaignId'],
+            adProduct: isset($data['adProduct']) ? AdProduct::from($data['adProduct']) : null,
+            budgets: array_map(
+                static fn(array $v) => CreateBudget::fromArray($v),
+                $data['budgets'] ?? [],
+            ),
+            costType: isset($data['costType']) ? CostType::from($data['costType']) : null,
+            countries: array_map(
+                static fn(string $v) => CountryCode::from($v),
+                $data['countries'] ?? [],
+            ),
+            endDateTime: $data['endDateTime'] ?? null,
+            fees: array_map(
+                static fn(array $v) => CreateCampaignFee::fromArray($v),
+                $data['fees'] ?? [],
+            ),
+            flights: array_map(
+                static fn(array $v) => CreateCampaignFlight::fromArray($v),
+                $data['flights'] ?? [],
+            ),
+            frequencies: array_map(
+                static fn(array $v) => CreateFrequency::fromArray($v),
+                $data['frequencies'] ?? [],
+            ),
+            marketplaceConfigurations: array_map(
+                static fn(array $v) => CreateMarketplaceCampaignConfigurations::fromArray($v),
+                $data['marketplaceConfigurations'] ?? [],
+            ),
+            marketplaces: array_map(
+                static fn(string $v) => Marketplace::from($v),
+                $data['marketplaces'] ?? [],
+            ),
+            name: $data['name'] ?? null,
+            optimizations: isset($data['optimizations']) ? UpdateCampaignOptimizations::fromArray($data['optimizations']) : null,
+            portfolioId: $data['portfolioId'] ?? null,
+            purchaseOrderNumber: $data['purchaseOrderNumber'] ?? null,
+            siteRestrictions: array_map(
+                static fn(string $v) => SiteRestriction::from($v),
+                $data['siteRestrictions'] ?? [],
+            ),
+            skanAppId: $data['skanAppId'] ?? null,
+            startDateTime: $data['startDateTime'] ?? null,
+            state: isset($data['state']) ? UpdateState::from($data['state']) : null,
+            tags: array_map(
+                static fn(array $v) => CreateTag::fromArray($v),
+                $data['tags'] ?? [],
+            ),
+        );
     }
 }

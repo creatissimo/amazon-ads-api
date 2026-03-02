@@ -8,13 +8,12 @@ final class TargetUpdate
 {
     public function __construct(
         private string $targetId,
-        private ?State $state = null,
+        private ?UpdateTargetBid $bid = null,
         private ?string $campaignId = null,
-        private ?MarketplaceScope $marketplaceScope = null,
-        private array $bid = [],
-        private array $targetDetails = [],
         private array $marketplaceConfigurations = [],
+        private ?MarketplaceScope $marketplaceScope = null,
         private array $marketplaces = [],
+        private ?UpdateState $state = null,
         private array $tags = [],
     ) {
     }
@@ -31,14 +30,14 @@ final class TargetUpdate
         return $this;
     }
 
-    public function getState(): ?State
+    public function getBid(): ?UpdateTargetBid
     {
-        return $this->state;
+        return $this->bid;
     }
 
-    public function setState(?State $state): self
+    public function setBid(?UpdateTargetBid $bid): self
     {
-        $this->state = $state;
+        $this->bid = $bid;
 
         return $this;
     }
@@ -55,6 +54,20 @@ final class TargetUpdate
         return $this;
     }
 
+    /** @return CreateMarketplaceTargetConfigurations[] */
+    public function getMarketplaceConfigurations(): array
+    {
+        return $this->marketplaceConfigurations;
+    }
+
+    /** @param CreateMarketplaceTargetConfigurations[] $marketplaceConfigurations */
+    public function setMarketplaceConfigurations(array $marketplaceConfigurations): self
+    {
+        $this->marketplaceConfigurations = $marketplaceConfigurations;
+
+        return $this;
+    }
+
     public function getMarketplaceScope(): ?MarketplaceScope
     {
         return $this->marketplaceScope;
@@ -63,42 +76,6 @@ final class TargetUpdate
     public function setMarketplaceScope(?MarketplaceScope $marketplaceScope): self
     {
         $this->marketplaceScope = $marketplaceScope;
-
-        return $this;
-    }
-
-    public function getBid(): array
-    {
-        return $this->bid;
-    }
-
-    public function setBid(array $bid): self
-    {
-        $this->bid = $bid;
-
-        return $this;
-    }
-
-    public function getTargetDetails(): array
-    {
-        return $this->targetDetails;
-    }
-
-    public function setTargetDetails(array $targetDetails): self
-    {
-        $this->targetDetails = $targetDetails;
-
-        return $this;
-    }
-
-    public function getMarketplaceConfigurations(): array
-    {
-        return $this->marketplaceConfigurations;
-    }
-
-    public function setMarketplaceConfigurations(array $marketplaceConfigurations): self
-    {
-        $this->marketplaceConfigurations = $marketplaceConfigurations;
 
         return $this;
     }
@@ -117,11 +94,25 @@ final class TargetUpdate
         return $this;
     }
 
+    public function getState(): ?UpdateState
+    {
+        return $this->state;
+    }
+
+    public function setState(?UpdateState $state): self
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /** @return CreateTag[] */
     public function getTags(): array
     {
         return $this->tags;
     }
 
+    /** @param CreateTag[] $tags */
     public function setTags(array $tags): self
     {
         $this->tags = $tags;
@@ -135,35 +126,60 @@ final class TargetUpdate
             'targetId' => $this->targetId,
         ];
 
-        if ($this->state !== null) {
-            $data['state'] = $this->state->value;
+        if ($this->bid !== null) {
+            $data['bid'] = $this->bid->toArray();
         }
         if ($this->campaignId !== null) {
             $data['campaignId'] = $this->campaignId;
         }
+        if ($this->marketplaceConfigurations !== []) {
+            $data['marketplaceConfigurations'] = array_map(
+                static fn(CreateMarketplaceTargetConfigurations $v) => $v->toArray(),
+                $this->marketplaceConfigurations,
+            );
+        }
         if ($this->marketplaceScope !== null) {
             $data['marketplaceScope'] = $this->marketplaceScope->value;
         }
-        if ($this->bid !== []) {
-            $data['bid'] = $this->bid;
-        }
-        if ($this->targetDetails !== []) {
-            $data['targetDetails'] = $this->targetDetails;
-        }
-        if ($this->marketplaceConfigurations !== []) {
-            $data['marketplaceConfigurations'] = $this->marketplaceConfigurations;
-        }
         if ($this->marketplaces !== []) {
             $data['marketplaces'] = array_map(
-                static fn(Marketplace $m) => $m->value,
+                static fn(Marketplace $v) => $v->value,
                 $this->marketplaces,
             );
         }
+        if ($this->state !== null) {
+            $data['state'] = $this->state->value;
+        }
         if ($this->tags !== []) {
-            $data['tags'] = $this->tags;
+            $data['tags'] = array_map(
+                static fn(CreateTag $v) => $v->toArray(),
+                $this->tags,
+            );
         }
 
         return $data;
     }
-}
 
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            targetId: $data['targetId'],
+            bid: isset($data['bid']) ? UpdateTargetBid::fromArray($data['bid']) : null,
+            campaignId: $data['campaignId'] ?? null,
+            marketplaceConfigurations: array_map(
+                static fn(array $v) => CreateMarketplaceTargetConfigurations::fromArray($v),
+                $data['marketplaceConfigurations'] ?? [],
+            ),
+            marketplaceScope: isset($data['marketplaceScope']) ? MarketplaceScope::from($data['marketplaceScope']) : null,
+            marketplaces: array_map(
+                static fn(string $v) => Marketplace::from($v),
+                $data['marketplaces'] ?? [],
+            ),
+            state: isset($data['state']) ? UpdateState::from($data['state']) : null,
+            tags: array_map(
+                static fn(array $v) => CreateTag::fromArray($v),
+                $data['tags'] ?? [],
+            ),
+        );
+    }
+}

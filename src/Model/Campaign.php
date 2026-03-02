@@ -7,63 +7,39 @@ namespace Creatissimo\AmazonAdsApi\Model;
 final class Campaign
 {
     public function __construct(
-        private string $campaignId,
-        private string $name,
         private AdProduct $adProduct,
-        private State $state,
+        private string $campaignId,
         private string $creationDateTime,
         private string $lastUpdatedDateTime,
-        private ?CostType $costType = null,
-        private ?SalesChannel $salesChannel = null,
-        private ?MarketplaceScope $marketplaceScope = null,
-        private ?string $startDateTime = null,
-        private ?string $endDateTime = null,
-        private ?string $portfolioId = null,
-        private ?string $brandId = null,
-        private ?string $globalCampaignId = null,
-        private ?bool $isMultiAdGroupsEnabled = null,
-        private ?bool $targetsAmazonDeal = null,
-        private ?string $purchaseOrderNumber = null,
-        private ?string $skanAppId = null,
-        private ?string $targetedPGDealId = null,
-        private ?string $autoScaleGlobalCampaign = null,
+        private string $name,
+        private State $state,
         private ?AutoCreationSettings $autoCreationSettings = null,
-        private ?CampaignOptimizations $optimizations = null,
-        private ?Status $status = null,
+        private ?AutoScaleGlobalCampaignSetting $autoScaleGlobalCampaign = null,
+        private ?string $brandId = null,
         private array $budgets = [],
+        private ?CostType $costType = null,
         private array $countries = [],
+        private ?string $endDateTime = null,
         private array $fees = [],
         private array $flights = [],
         private array $frequencies = [],
+        private ?string $globalCampaignId = null,
+        private ?bool $isMultiAdGroupsEnabled = null,
         private array $marketplaceConfigurations = [],
+        private ?MarketplaceScope $marketplaceScope = null,
         private array $marketplaces = [],
+        private ?CampaignOptimizations $optimizations = null,
+        private ?string $portfolioId = null,
+        private ?string $purchaseOrderNumber = null,
+        private ?SalesChannel $salesChannel = null,
         private array $siteRestrictions = [],
+        private ?string $skanAppId = null,
+        private ?string $startDateTime = null,
+        private ?Status $status = null,
         private array $tags = [],
+        private ?string $targetedPGDealId = null,
+        private ?bool $targetsAmazonDeal = null,
     ) {
-    }
-
-    public function getCampaignId(): string
-    {
-        return $this->campaignId;
-    }
-
-    public function setCampaignId(string $campaignId): self
-    {
-        $this->campaignId = $campaignId;
-
-        return $this;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getAdProduct(): AdProduct
@@ -78,14 +54,14 @@ final class Campaign
         return $this;
     }
 
-    public function getState(): State
+    public function getCampaignId(): string
     {
-        return $this->state;
+        return $this->campaignId;
     }
 
-    public function setState(State $state): self
+    public function setCampaignId(string $campaignId): self
     {
-        $this->state = $state;
+        $this->campaignId = $campaignId;
 
         return $this;
     }
@@ -114,74 +90,50 @@ final class Campaign
         return $this;
     }
 
-    public function getCostType(): ?CostType
+    public function getName(): string
     {
-        return $this->costType;
+        return $this->name;
     }
 
-    public function setCostType(?CostType $costType): self
+    public function setName(string $name): self
     {
-        $this->costType = $costType;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getSalesChannel(): ?SalesChannel
+    public function getState(): State
     {
-        return $this->salesChannel;
+        return $this->state;
     }
 
-    public function setSalesChannel(?SalesChannel $salesChannel): self
+    public function setState(State $state): self
     {
-        $this->salesChannel = $salesChannel;
+        $this->state = $state;
 
         return $this;
     }
 
-    public function getMarketplaceScope(): ?MarketplaceScope
+    public function getAutoCreationSettings(): ?AutoCreationSettings
     {
-        return $this->marketplaceScope;
+        return $this->autoCreationSettings;
     }
 
-    public function setMarketplaceScope(?MarketplaceScope $marketplaceScope): self
+    public function setAutoCreationSettings(?AutoCreationSettings $autoCreationSettings): self
     {
-        $this->marketplaceScope = $marketplaceScope;
+        $this->autoCreationSettings = $autoCreationSettings;
 
         return $this;
     }
 
-    public function getStartDateTime(): ?string
+    public function getAutoScaleGlobalCampaign(): ?AutoScaleGlobalCampaignSetting
     {
-        return $this->startDateTime;
+        return $this->autoScaleGlobalCampaign;
     }
 
-    public function setStartDateTime(?string $startDateTime): self
+    public function setAutoScaleGlobalCampaign(?AutoScaleGlobalCampaignSetting $autoScaleGlobalCampaign): self
     {
-        $this->startDateTime = $startDateTime;
-
-        return $this;
-    }
-
-    public function getEndDateTime(): ?string
-    {
-        return $this->endDateTime;
-    }
-
-    public function setEndDateTime(?string $endDateTime): self
-    {
-        $this->endDateTime = $endDateTime;
-
-        return $this;
-    }
-
-    public function getPortfolioId(): ?string
-    {
-        return $this->portfolioId;
-    }
-
-    public function setPortfolioId(?string $portfolioId): self
-    {
-        $this->portfolioId = $portfolioId;
+        $this->autoScaleGlobalCampaign = $autoScaleGlobalCampaign;
 
         return $this;
     }
@@ -194,78 +146,6 @@ final class Campaign
     public function setBrandId(?string $brandId): self
     {
         $this->brandId = $brandId;
-
-        return $this;
-    }
-
-    public function getGlobalCampaignId(): ?string
-    {
-        return $this->globalCampaignId;
-    }
-
-    public function setGlobalCampaignId(?string $globalCampaignId): self
-    {
-        $this->globalCampaignId = $globalCampaignId;
-
-        return $this;
-    }
-
-    public function getIsMultiAdGroupsEnabled(): ?bool
-    {
-        return $this->isMultiAdGroupsEnabled;
-    }
-
-    public function setIsMultiAdGroupsEnabled(?bool $isMultiAdGroupsEnabled): self
-    {
-        $this->isMultiAdGroupsEnabled = $isMultiAdGroupsEnabled;
-
-        return $this;
-    }
-
-    public function getTargetsAmazonDeal(): ?bool
-    {
-        return $this->targetsAmazonDeal;
-    }
-
-    public function setTargetsAmazonDeal(?bool $targetsAmazonDeal): self
-    {
-        $this->targetsAmazonDeal = $targetsAmazonDeal;
-
-        return $this;
-    }
-
-    public function getPurchaseOrderNumber(): ?string
-    {
-        return $this->purchaseOrderNumber;
-    }
-
-    public function setPurchaseOrderNumber(?string $purchaseOrderNumber): self
-    {
-        $this->purchaseOrderNumber = $purchaseOrderNumber;
-
-        return $this;
-    }
-
-    public function getSkanAppId(): ?string
-    {
-        return $this->skanAppId;
-    }
-
-    public function setSkanAppId(?string $skanAppId): self
-    {
-        $this->skanAppId = $skanAppId;
-
-        return $this;
-    }
-
-    public function getTargetedPGDealId(): ?string
-    {
-        return $this->targetedPGDealId;
-    }
-
-    public function setTargetedPGDealId(?string $targetedPGDealId): self
-    {
-        $this->targetedPGDealId = $targetedPGDealId;
 
         return $this;
     }
@@ -284,11 +164,25 @@ final class Campaign
         return $this;
     }
 
+    public function getCostType(): ?CostType
+    {
+        return $this->costType;
+    }
+
+    public function setCostType(?CostType $costType): self
+    {
+        $this->costType = $costType;
+
+        return $this;
+    }
+
+    /** @return CountryCode[] */
     public function getCountries(): array
     {
         return $this->countries;
     }
 
+    /** @param CountryCode[] $countries */
     public function setCountries(array $countries): self
     {
         $this->countries = $countries;
@@ -296,62 +190,14 @@ final class Campaign
         return $this;
     }
 
-    public function getTags(): array
+    public function getEndDateTime(): ?string
     {
-        return $this->tags;
+        return $this->endDateTime;
     }
 
-    public function setTags(array $tags): self
+    public function setEndDateTime(?string $endDateTime): self
     {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    public function getAutoScaleGlobalCampaign(): ?string
-    {
-        return $this->autoScaleGlobalCampaign;
-    }
-
-    public function setAutoScaleGlobalCampaign(?string $autoScaleGlobalCampaign): self
-    {
-        $this->autoScaleGlobalCampaign = $autoScaleGlobalCampaign;
-
-        return $this;
-    }
-
-    public function getAutoCreationSettings(): ?AutoCreationSettings
-    {
-        return $this->autoCreationSettings;
-    }
-
-    public function setAutoCreationSettings(?AutoCreationSettings $autoCreationSettings): self
-    {
-        $this->autoCreationSettings = $autoCreationSettings;
-
-        return $this;
-    }
-
-    public function getOptimizations(): ?CampaignOptimizations
-    {
-        return $this->optimizations;
-    }
-
-    public function setOptimizations(?CampaignOptimizations $optimizations): self
-    {
-        $this->optimizations = $optimizations;
-
-        return $this;
-    }
-
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?Status $status): self
-    {
-        $this->status = $status;
+        $this->endDateTime = $endDateTime;
 
         return $this;
     }
@@ -398,6 +244,30 @@ final class Campaign
         return $this;
     }
 
+    public function getGlobalCampaignId(): ?string
+    {
+        return $this->globalCampaignId;
+    }
+
+    public function setGlobalCampaignId(?string $globalCampaignId): self
+    {
+        $this->globalCampaignId = $globalCampaignId;
+
+        return $this;
+    }
+
+    public function getIsMultiAdGroupsEnabled(): ?bool
+    {
+        return $this->isMultiAdGroupsEnabled;
+    }
+
+    public function setIsMultiAdGroupsEnabled(?bool $isMultiAdGroupsEnabled): self
+    {
+        $this->isMultiAdGroupsEnabled = $isMultiAdGroupsEnabled;
+
+        return $this;
+    }
+
     /** @return MarketplaceCampaignConfigurations[] */
     public function getMarketplaceConfigurations(): array
     {
@@ -408,6 +278,18 @@ final class Campaign
     public function setMarketplaceConfigurations(array $marketplaceConfigurations): self
     {
         $this->marketplaceConfigurations = $marketplaceConfigurations;
+
+        return $this;
+    }
+
+    public function getMarketplaceScope(): ?MarketplaceScope
+    {
+        return $this->marketplaceScope;
+    }
+
+    public function setMarketplaceScope(?MarketplaceScope $marketplaceScope): self
+    {
+        $this->marketplaceScope = $marketplaceScope;
 
         return $this;
     }
@@ -426,6 +308,54 @@ final class Campaign
         return $this;
     }
 
+    public function getOptimizations(): ?CampaignOptimizations
+    {
+        return $this->optimizations;
+    }
+
+    public function setOptimizations(?CampaignOptimizations $optimizations): self
+    {
+        $this->optimizations = $optimizations;
+
+        return $this;
+    }
+
+    public function getPortfolioId(): ?string
+    {
+        return $this->portfolioId;
+    }
+
+    public function setPortfolioId(?string $portfolioId): self
+    {
+        $this->portfolioId = $portfolioId;
+
+        return $this;
+    }
+
+    public function getPurchaseOrderNumber(): ?string
+    {
+        return $this->purchaseOrderNumber;
+    }
+
+    public function setPurchaseOrderNumber(?string $purchaseOrderNumber): self
+    {
+        $this->purchaseOrderNumber = $purchaseOrderNumber;
+
+        return $this;
+    }
+
+    public function getSalesChannel(): ?SalesChannel
+    {
+        return $this->salesChannel;
+    }
+
+    public function setSalesChannel(?SalesChannel $salesChannel): self
+    {
+        $this->salesChannel = $salesChannel;
+
+        return $this;
+    }
+
     /** @return SiteRestriction[] */
     public function getSiteRestrictions(): array
     {
@@ -440,64 +370,142 @@ final class Campaign
         return $this;
     }
 
+    public function getSkanAppId(): ?string
+    {
+        return $this->skanAppId;
+    }
+
+    public function setSkanAppId(?string $skanAppId): self
+    {
+        $this->skanAppId = $skanAppId;
+
+        return $this;
+    }
+
+    public function getStartDateTime(): ?string
+    {
+        return $this->startDateTime;
+    }
+
+    public function setStartDateTime(?string $startDateTime): self
+    {
+        $this->startDateTime = $startDateTime;
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /** @return Tag[] */
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    /** @param Tag[] $tags */
+    public function setTags(array $tags): self
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    public function getTargetedPGDealId(): ?string
+    {
+        return $this->targetedPGDealId;
+    }
+
+    public function setTargetedPGDealId(?string $targetedPGDealId): self
+    {
+        $this->targetedPGDealId = $targetedPGDealId;
+
+        return $this;
+    }
+
+    public function getTargetsAmazonDeal(): ?bool
+    {
+        return $this->targetsAmazonDeal;
+    }
+
+    public function setTargetsAmazonDeal(?bool $targetsAmazonDeal): self
+    {
+        $this->targetsAmazonDeal = $targetsAmazonDeal;
+
+        return $this;
+    }
+
     public static function fromArray(array $data): self
     {
-        $budgets = array_map(
-            static fn(array $b) => Budget::fromArray($b),
-            $data['budgets'] ?? [],
-        );
-
         return new self(
-            campaignId: $data['campaignId'],
-            name: $data['name'],
             adProduct: AdProduct::from($data['adProduct']),
-            state: State::from($data['state']),
+            campaignId: $data['campaignId'],
             creationDateTime: $data['creationDateTime'],
             lastUpdatedDateTime: $data['lastUpdatedDateTime'],
-            costType: isset($data['costType']) ? CostType::from($data['costType']) : null,
-            salesChannel: isset($data['salesChannel']) ? SalesChannel::from($data['salesChannel']) : null,
-            marketplaceScope: isset($data['marketplaceScope']) ? MarketplaceScope::from($data['marketplaceScope']) : null,
-            startDateTime: $data['startDateTime'] ?? null,
-            endDateTime: $data['endDateTime'] ?? null,
-            portfolioId: $data['portfolioId'] ?? null,
-            brandId: $data['brandId'] ?? null,
-            globalCampaignId: $data['globalCampaignId'] ?? null,
-            isMultiAdGroupsEnabled: $data['isMultiAdGroupsEnabled'] ?? null,
-            targetsAmazonDeal: $data['targetsAmazonDeal'] ?? null,
-            purchaseOrderNumber: $data['purchaseOrderNumber'] ?? null,
-            skanAppId: $data['skanAppId'] ?? null,
-            targetedPGDealId: $data['targetedPGDealId'] ?? null,
-            autoScaleGlobalCampaign: $data['autoScaleGlobalCampaign'] ?? null,
+            name: $data['name'],
+            state: State::from($data['state']),
             autoCreationSettings: isset($data['autoCreationSettings']) ? AutoCreationSettings::fromArray($data['autoCreationSettings']) : null,
-            optimizations: isset($data['optimizations']) ? CampaignOptimizations::fromArray($data['optimizations']) : null,
-            status: isset($data['status']) ? Status::fromArray($data['status']) : null,
-            budgets: $budgets,
-            countries: $data['countries'] ?? [],
+            autoScaleGlobalCampaign: isset($data['autoScaleGlobalCampaign']) ? AutoScaleGlobalCampaignSetting::from($data['autoScaleGlobalCampaign']) : null,
+            brandId: $data['brandId'] ?? null,
+            budgets: array_map(
+                static fn(array $v) => Budget::fromArray($v),
+                $data['budgets'] ?? [],
+            ),
+            costType: isset($data['costType']) ? CostType::from($data['costType']) : null,
+            countries: array_map(
+                static fn(string $v) => CountryCode::from($v),
+                $data['countries'] ?? [],
+            ),
+            endDateTime: $data['endDateTime'] ?? null,
             fees: array_map(
-                static fn(array $f) => CampaignFee::fromArray($f),
+                static fn(array $v) => CampaignFee::fromArray($v),
                 $data['fees'] ?? [],
             ),
             flights: array_map(
-                static fn(array $f) => CampaignFlight::fromArray($f),
+                static fn(array $v) => CampaignFlight::fromArray($v),
                 $data['flights'] ?? [],
             ),
             frequencies: array_map(
-                static fn(array $f) => Frequency::fromArray($f),
+                static fn(array $v) => Frequency::fromArray($v),
                 $data['frequencies'] ?? [],
             ),
+            globalCampaignId: $data['globalCampaignId'] ?? null,
+            isMultiAdGroupsEnabled: isset($data['isMultiAdGroupsEnabled']) ? (bool) $data['isMultiAdGroupsEnabled'] : null,
             marketplaceConfigurations: array_map(
-                static fn(array $m) => MarketplaceCampaignConfigurations::fromArray($m),
+                static fn(array $v) => MarketplaceCampaignConfigurations::fromArray($v),
                 $data['marketplaceConfigurations'] ?? [],
             ),
+            marketplaceScope: isset($data['marketplaceScope']) ? MarketplaceScope::from($data['marketplaceScope']) : null,
             marketplaces: array_map(
-                static fn(string $m) => Marketplace::from($m),
+                static fn(string $v) => Marketplace::from($v),
                 $data['marketplaces'] ?? [],
             ),
+            optimizations: isset($data['optimizations']) ? CampaignOptimizations::fromArray($data['optimizations']) : null,
+            portfolioId: $data['portfolioId'] ?? null,
+            purchaseOrderNumber: $data['purchaseOrderNumber'] ?? null,
+            salesChannel: isset($data['salesChannel']) ? SalesChannel::from($data['salesChannel']) : null,
             siteRestrictions: array_map(
-                static fn(string $s) => SiteRestriction::from($s),
+                static fn(string $v) => SiteRestriction::from($v),
                 $data['siteRestrictions'] ?? [],
             ),
-            tags: $data['tags'] ?? [],
+            skanAppId: $data['skanAppId'] ?? null,
+            startDateTime: $data['startDateTime'] ?? null,
+            status: isset($data['status']) ? Status::fromArray($data['status']) : null,
+            tags: array_map(
+                static fn(array $v) => Tag::fromArray($v),
+                $data['tags'] ?? [],
+            ),
+            targetedPGDealId: $data['targetedPGDealId'] ?? null,
+            targetsAmazonDeal: isset($data['targetsAmazonDeal']) ? (bool) $data['targetsAmazonDeal'] : null,
         );
     }
 }

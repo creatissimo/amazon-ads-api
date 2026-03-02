@@ -8,7 +8,7 @@ final class CreateFlightBudget
 {
     public function __construct(
         private BudgetType $budgetType,
-        private mixed $budgetValue,
+        private CreateBudgetValue $budgetValue,
     ) {
     }
 
@@ -24,12 +24,12 @@ final class CreateFlightBudget
         return $this;
     }
 
-    public function getBudgetValue(): mixed
+    public function getBudgetValue(): CreateBudgetValue
     {
         return $this->budgetValue;
     }
 
-    public function setBudgetValue(mixed $budgetValue): self
+    public function setBudgetValue(CreateBudgetValue $budgetValue): self
     {
         $this->budgetValue = $budgetValue;
 
@@ -38,20 +38,17 @@ final class CreateFlightBudget
 
     public function toArray(): array
     {
-        $data = [
+        return [
             'budgetType' => $this->budgetType->value,
-            'budgetValue' => $this->budgetValue,
+            'budgetValue' => $this->budgetValue->toArray(),
         ];
-
-
-        return $data;
     }
 
     public static function fromArray(array $data): self
     {
         return new self(
             budgetType: BudgetType::from($data['budgetType']),
-            budgetValue: $data['budgetValue'],
+            budgetValue: CreateBudgetValue::fromArray($data['budgetValue']),
         );
     }
 }

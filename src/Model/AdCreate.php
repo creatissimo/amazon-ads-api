@@ -9,13 +9,13 @@ final class AdCreate
     public function __construct(
         private AdProduct $adProduct,
         private AdType $adType,
+        private string $creative,
         private CreateState $state,
-        private array $creative,
         private ?string $adGroupId = null,
-        private ?string $name = null,
-        private ?MarketplaceScope $marketplaceScope = null,
         private array $marketplaceConfigurations = [],
+        private ?MarketplaceScope $marketplaceScope = null,
         private array $marketplaces = [],
+        private ?string $name = null,
         private array $tags = [],
     ) {
     }
@@ -44,6 +44,18 @@ final class AdCreate
         return $this;
     }
 
+    public function getCreative(): string
+    {
+        return $this->creative;
+    }
+
+    public function setCreative(string $creative): self
+    {
+        $this->creative = $creative;
+
+        return $this;
+    }
+
     public function getState(): CreateState
     {
         return $this->state;
@@ -52,18 +64,6 @@ final class AdCreate
     public function setState(CreateState $state): self
     {
         $this->state = $state;
-
-        return $this;
-    }
-
-    public function getCreative(): array
-    {
-        return $this->creative;
-    }
-
-    public function setCreative(array $creative): self
-    {
-        $this->creative = $creative;
 
         return $this;
     }
@@ -80,14 +80,16 @@ final class AdCreate
         return $this;
     }
 
-    public function getName(): ?string
+    /** @return CreateMarketplaceAdConfigurations[] */
+    public function getMarketplaceConfigurations(): array
     {
-        return $this->name;
+        return $this->marketplaceConfigurations;
     }
 
-    public function setName(?string $name): self
+    /** @param CreateMarketplaceAdConfigurations[] $marketplaceConfigurations */
+    public function setMarketplaceConfigurations(array $marketplaceConfigurations): self
     {
-        $this->name = $name;
+        $this->marketplaceConfigurations = $marketplaceConfigurations;
 
         return $this;
     }
@@ -104,23 +106,13 @@ final class AdCreate
         return $this;
     }
 
-    public function getMarketplaceConfigurations(): array
-    {
-        return $this->marketplaceConfigurations;
-    }
-
-    public function setMarketplaceConfigurations(array $marketplaceConfigurations): self
-    {
-        $this->marketplaceConfigurations = $marketplaceConfigurations;
-
-        return $this;
-    }
-
+    /** @return Marketplace[] */
     public function getMarketplaces(): array
     {
         return $this->marketplaces;
     }
 
+    /** @param Marketplace[] $marketplaces */
     public function setMarketplaces(array $marketplaces): self
     {
         $this->marketplaces = $marketplaces;
@@ -128,11 +120,25 @@ final class AdCreate
         return $this;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /** @return CreateTag[] */
     public function getTags(): array
     {
         return $this->tags;
     }
 
+    /** @param CreateTag[] $tags */
     public function setTags(array $tags): self
     {
         $this->tags = $tags;
@@ -145,30 +151,63 @@ final class AdCreate
         $data = [
             'adProduct' => $this->adProduct->value,
             'adType' => $this->adType->value,
-            'state' => $this->state->value,
             'creative' => $this->creative,
+            'state' => $this->state->value,
         ];
 
         if ($this->adGroupId !== null) {
             $data['adGroupId'] = $this->adGroupId;
         }
-        if ($this->name !== null) {
-            $data['name'] = $this->name;
+        if ($this->marketplaceConfigurations !== []) {
+            $data['marketplaceConfigurations'] = array_map(
+                static fn(CreateMarketplaceAdConfigurations $v) => $v->toArray(),
+                $this->marketplaceConfigurations,
+            );
         }
         if ($this->marketplaceScope !== null) {
             $data['marketplaceScope'] = $this->marketplaceScope->value;
         }
-        if ($this->marketplaceConfigurations !== []) {
-            $data['marketplaceConfigurations'] = $this->marketplaceConfigurations;
-        }
         if ($this->marketplaces !== []) {
-            $data['marketplaces'] = $this->marketplaces;
+            $data['marketplaces'] = array_map(
+                static fn(Marketplace $v) => $v->value,
+                $this->marketplaces,
+            );
+        }
+        if ($this->name !== null) {
+            $data['name'] = $this->name;
         }
         if ($this->tags !== []) {
-            $data['tags'] = $this->tags;
+            $data['tags'] = array_map(
+                static fn(CreateTag $v) => $v->toArray(),
+                $this->tags,
+            );
         }
 
         return $data;
     }
-}
 
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            adProduct: AdProduct::from($data['adProduct']),
+            adType: AdType::from($data['adType']),
+            creative: $data['creative'],
+            state: CreateState::from($data['state']),
+            adGroupId: $data['adGroupId'] ?? null,
+            marketplaceConfigurations: array_map(
+                static fn(array $v) => CreateMarketplaceAdConfigurations::fromArray($v),
+                $data['marketplaceConfigurations'] ?? [],
+            ),
+            marketplaceScope: isset($data['marketplaceScope']) ? MarketplaceScope::from($data['marketplaceScope']) : null,
+            marketplaces: array_map(
+                static fn(string $v) => Marketplace::from($v),
+                $data['marketplaces'] ?? [],
+            ),
+            name: $data['name'] ?? null,
+            tags: array_map(
+                static fn(array $v) => CreateTag::fromArray($v),
+                $data['tags'] ?? [],
+            ),
+        );
+    }
+}

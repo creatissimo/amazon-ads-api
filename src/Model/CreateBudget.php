@@ -8,7 +8,7 @@ final class CreateBudget
 {
     public function __construct(
         private BudgetType $budgetType,
-        private mixed $budgetValue,
+        private CreateBudgetValue $budgetValue,
         private Recurrence $recurrenceTimePeriod,
     ) {
     }
@@ -25,12 +25,12 @@ final class CreateBudget
         return $this;
     }
 
-    public function getBudgetValue(): mixed
+    public function getBudgetValue(): CreateBudgetValue
     {
         return $this->budgetValue;
     }
 
-    public function setBudgetValue(mixed $budgetValue): self
+    public function setBudgetValue(CreateBudgetValue $budgetValue): self
     {
         $this->budgetValue = $budgetValue;
 
@@ -51,21 +51,18 @@ final class CreateBudget
 
     public function toArray(): array
     {
-        $data = [
+        return [
             'budgetType' => $this->budgetType->value,
-            'budgetValue' => $this->budgetValue,
+            'budgetValue' => $this->budgetValue->toArray(),
             'recurrenceTimePeriod' => $this->recurrenceTimePeriod->value,
         ];
-
-
-        return $data;
     }
 
     public static function fromArray(array $data): self
     {
         return new self(
             budgetType: BudgetType::from($data['budgetType']),
-            budgetValue: $data['budgetValue'],
+            budgetValue: CreateBudgetValue::fromArray($data['budgetValue']),
             recurrenceTimePeriod: Recurrence::from($data['recurrenceTimePeriod']),
         );
     }

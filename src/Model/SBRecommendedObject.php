@@ -7,16 +7,16 @@ namespace Creatissimo\AmazonAdsApi\Model;
 final class SBRecommendedObject
 {
     public function __construct(
-        private mixed $recommendedObjectSettings = null,
+        private ?SBObjectSettings $recommendedObjectSettings = null,
     ) {
     }
 
-    public function getRecommendedObjectSettings(): mixed
+    public function getRecommendedObjectSettings(): ?SBObjectSettings
     {
         return $this->recommendedObjectSettings;
     }
 
-    public function setRecommendedObjectSettings(mixed $recommendedObjectSettings): self
+    public function setRecommendedObjectSettings(?SBObjectSettings $recommendedObjectSettings): self
     {
         $this->recommendedObjectSettings = $recommendedObjectSettings;
 
@@ -26,7 +26,7 @@ final class SBRecommendedObject
     public static function fromArray(array $data): self
     {
         return new self(
-            recommendedObjectSettings: $data['recommendedObjectSettings'] ?? null,
+            recommendedObjectSettings: isset($data['recommendedObjectSettings']) ? SBObjectSettings::fromArray($data['recommendedObjectSettings']) : null,
         );
     }
 }
