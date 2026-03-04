@@ -10,7 +10,7 @@ final class TargetCreate
         private AdProduct $adProduct,
         private bool $negative,
         private CreateState $state,
-        private string $targetDetails,
+        private CreateTargetDetails $targetDetails,
         private TargetType $targetType,
         private ?string $adGroupId = null,
         private ?CreateTargetBid $bid = null,
@@ -58,12 +58,12 @@ final class TargetCreate
         return $this;
     }
 
-    public function getTargetDetails(): string
+    public function getTargetDetails(): CreateTargetDetails
     {
         return $this->targetDetails;
     }
 
-    public function setTargetDetails(string $targetDetails): self
+    public function setTargetDetails(CreateTargetDetails $targetDetails): self
     {
         $this->targetDetails = $targetDetails;
 
@@ -178,7 +178,7 @@ final class TargetCreate
             'adProduct' => $this->adProduct->value,
             'negative' => $this->negative,
             'state' => $this->state->value,
-            'targetDetails' => $this->targetDetails,
+            'targetDetails' => $this->targetDetails->toArray(),
             'targetType' => $this->targetType->value,
         ];
 
@@ -222,7 +222,7 @@ final class TargetCreate
             adProduct: AdProduct::from($data['adProduct']),
             negative: (bool) $data['negative'],
             state: CreateState::from($data['state']),
-            targetDetails: $data['targetDetails'],
+            targetDetails: CreateTargetDetails::fromArray($data['targetDetails']),
             targetType: TargetType::from($data['targetType']),
             adGroupId: $data['adGroupId'] ?? null,
             bid: isset($data['bid']) ? CreateTargetBid::fromArray($data['bid']) : null,
