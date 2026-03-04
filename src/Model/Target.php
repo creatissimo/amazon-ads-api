@@ -12,7 +12,7 @@ final class Target
         private string $lastUpdatedDateTime,
         private bool $negative,
         private State $state,
-        private string $targetDetails,
+        private TargetDetails $targetDetails,
         private string $targetId,
         private TargetType $targetType,
         private ?string $adGroupId = null,
@@ -88,12 +88,12 @@ final class Target
         return $this;
     }
 
-    public function getTargetDetails(): string
+    public function getTargetDetails(): TargetDetails
     {
         return $this->targetDetails;
     }
 
-    public function setTargetDetails(string $targetDetails): self
+    public function setTargetDetails(TargetDetails $targetDetails): self
     {
         $this->targetDetails = $targetDetails;
 
@@ -258,7 +258,7 @@ final class Target
             lastUpdatedDateTime: $data['lastUpdatedDateTime'],
             negative: (bool) $data['negative'],
             state: State::from($data['state']),
-            targetDetails: $data['targetDetails'],
+            targetDetails: TargetDetails::fromArray($data['targetDetails']),
             targetId: $data['targetId'],
             targetType: TargetType::from($data['targetType']),
             adGroupId: $data['adGroupId'] ?? null,
