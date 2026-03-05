@@ -36,6 +36,20 @@ final class VideoCreative
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->onlineVideoSettings !== null) {
+            $data['onlineVideoSettings'] = $this->onlineVideoSettings;
+        }
+        if ($this->streamingTvSettings !== null) {
+            $data['streamingTvSettings'] = $this->streamingTvSettings;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

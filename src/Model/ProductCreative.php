@@ -23,6 +23,13 @@ final class ProductCreative
         return $this;
     }
 
+    public function toArray(): array
+    {
+        return [
+            'productCreativeSettings' => $this->productCreativeSettings->toArray(),
+        ];
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -114,6 +114,38 @@ final class ComponentCreative
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->assetBasedCreativeSettings !== null) {
+            $data['assetBasedCreativeSettings'] = $this->assetBasedCreativeSettings;
+        }
+        if ($this->autoCollectionSettings !== null) {
+            $data['autoCollectionSettings'] = $this->autoCollectionSettings;
+        }
+        if ($this->brandStoreSettings !== null) {
+            $data['brandStoreSettings'] = $this->brandStoreSettings;
+        }
+        if ($this->manualCollectionSettings !== null) {
+            $data['manualCollectionSettings'] = $this->manualCollectionSettings;
+        }
+        if ($this->productCollectionSettings !== null) {
+            $data['productCollectionSettings'] = $this->productCollectionSettings;
+        }
+        if ($this->productVideoSettings !== null) {
+            $data['productVideoSettings'] = $this->productVideoSettings;
+        }
+        if ($this->responsiveEcommerceSettings !== null) {
+            $data['responsiveEcommerceSettings'] = $this->responsiveEcommerceSettings;
+        }
+        if ($this->storeSpotlightSettings !== null) {
+            $data['storeSpotlightSettings'] = $this->storeSpotlightSettings;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

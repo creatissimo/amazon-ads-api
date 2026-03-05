@@ -23,6 +23,17 @@ final class SpotlightVideoSettings
         return $this->videos;
     }
 
+    public function toArray(): array
+    {
+        return [
+            'optimizeText' => $this->optimizeText,
+            'videos' => array_map(
+                static fn(Video $v) => $v->toArray(),
+                $this->videos,
+            ),
+        ];
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

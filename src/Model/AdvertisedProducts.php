@@ -47,6 +47,34 @@ final class AdvertisedProducts
         return $this->resolvedProductIdType;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'productIdType' => $this->productIdType->value,
+        ];
+
+        if ($this->globalStoreSetting !== null) {
+            $data['globalStoreSetting'] = $this->globalStoreSetting->toArray();
+        }
+        if ($this->marketplaceSettings !== []) {
+            $data['marketplaceSettings'] = array_map(
+                static fn(AdvertisedProductMarketplaceSetting $v) => $v->toArray(),
+                $this->marketplaceSettings,
+            );
+        }
+        if ($this->productId !== null) {
+            $data['productId'] = $this->productId;
+        }
+        if ($this->resolvedProductId !== null) {
+            $data['resolvedProductId'] = $this->resolvedProductId;
+        }
+        if ($this->resolvedProductIdType !== null) {
+            $data['resolvedProductIdType'] = $this->resolvedProductIdType->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

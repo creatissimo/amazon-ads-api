@@ -27,6 +27,13 @@ final class AudioCreative
         return $this->settings;
     }
 
+    public function toArray(): array
+    {
+        return [
+            $this->type => $this->settings,
+        ];
+    }
+
     public static function fromArray(array $data): self
     {
         if (isset($data['standardAudioSettings'])) {

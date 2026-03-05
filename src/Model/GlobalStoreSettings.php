@@ -16,6 +16,17 @@ final class GlobalStoreSettings
         return $this->catalogSourceMarketplace;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->catalogSourceMarketplace !== null) {
+            $data['catalogSourceMarketplace'] = $this->catalogSourceMarketplace->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

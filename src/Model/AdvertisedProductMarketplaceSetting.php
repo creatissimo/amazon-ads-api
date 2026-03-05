@@ -34,6 +34,23 @@ final class AdvertisedProductMarketplaceSetting
         return $this->resolvedProductId;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'marketplace' => $this->marketplace->value,
+            'productId' => $this->productId,
+        ];
+
+        if ($this->globalStoreSetting !== null) {
+            $data['globalStoreSetting'] = $this->globalStoreSetting->toArray();
+        }
+        if ($this->resolvedProductId !== null) {
+            $data['resolvedProductId'] = $this->resolvedProductId;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

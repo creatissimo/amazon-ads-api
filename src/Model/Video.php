@@ -34,6 +34,23 @@ final class Video
         return $this->headline;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'assetId' => $this->assetId,
+            'assetVersion' => $this->assetVersion,
+        ];
+
+        if ($this->description !== null) {
+            $data['description'] = $this->description;
+        }
+        if ($this->headline !== null) {
+            $data['headline'] = $this->headline;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

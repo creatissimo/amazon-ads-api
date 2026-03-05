@@ -28,6 +28,22 @@ final class ProductCreativeSettings
         return $this->spotlightVideos;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'advertisedProduct' => $this->advertisedProduct->toArray(),
+        ];
+
+        if ($this->headline !== null) {
+            $data['headline'] = $this->headline;
+        }
+        if ($this->spotlightVideos !== null) {
+            $data['spotlightVideos'] = $this->spotlightVideos->toArray();
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

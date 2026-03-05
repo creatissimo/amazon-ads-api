@@ -36,6 +36,20 @@ final class ThirdPartyCreative
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->thirdPartyDisplaySettings !== null) {
+            $data['thirdPartyDisplaySettings'] = $this->thirdPartyDisplaySettings;
+        }
+        if ($this->thirdPartyVideoSettings !== null) {
+            $data['thirdPartyVideoSettings'] = $this->thirdPartyVideoSettings;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

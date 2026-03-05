@@ -52,6 +52,13 @@ final class Creative
         return $this->creative;
     }
 
+    public function toArray(): array
+    {
+        return [
+            $this->type => $this->creative->toArray(),
+        ];
+    }
+
     public static function fromArray(array $data): self
     {
         if (isset($data['audioCreative'])) {
