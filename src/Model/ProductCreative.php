@@ -7,16 +7,16 @@ namespace Creatissimo\AmazonAdsApi\Model;
 final class ProductCreative
 {
     public function __construct(
-        private array $productCreativeSettings,
+        private ProductCreativeSettings $productCreativeSettings,
     ) {
     }
 
-    public function getProductCreativeSettings(): array
+    public function getProductCreativeSettings(): ProductCreativeSettings
     {
         return $this->productCreativeSettings;
     }
 
-    public function setProductCreativeSettings(array $productCreativeSettings): self
+    public function setProductCreativeSettings(ProductCreativeSettings $productCreativeSettings): self
     {
         $this->productCreativeSettings = $productCreativeSettings;
 
@@ -26,8 +26,7 @@ final class ProductCreative
     public static function fromArray(array $data): self
     {
         return new self(
-            productCreativeSettings: $data['productCreativeSettings'],
+            productCreativeSettings: ProductCreativeSettings::fromArray($data['productCreativeSettings']),
         );
     }
 }
-
