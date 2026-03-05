@@ -11,10 +11,10 @@ final class Ad
         private AdProduct $adProduct,
         private AdType $adType,
         private string $creationDateTime,
-        private string $creative,
+        private Creative $creative,
         private string $lastUpdatedDateTime,
         private State $state,
-        private ?string $activeCreative = null,
+        private ?Creative $activeCreative = null,
         private ?string $adGroupId = null,
         private ?string $campaignId = null,
         private ?string $globalAdId = null,
@@ -75,12 +75,12 @@ final class Ad
         return $this;
     }
 
-    public function getCreative(): string
+    public function getCreative(): Creative
     {
         return $this->creative;
     }
 
-    public function setCreative(string $creative): self
+    public function setCreative(Creative $creative): self
     {
         $this->creative = $creative;
 
@@ -111,12 +111,12 @@ final class Ad
         return $this;
     }
 
-    public function getActiveCreative(): ?string
+    public function getActiveCreative(): ?Creative
     {
         return $this->activeCreative;
     }
 
-    public function setActiveCreative(?string $activeCreative): self
+    public function setActiveCreative(?Creative $activeCreative): self
     {
         $this->activeCreative = $activeCreative;
 
@@ -244,10 +244,10 @@ final class Ad
             adProduct: AdProduct::from($data['adProduct']),
             adType: AdType::from($data['adType']),
             creationDateTime: $data['creationDateTime'],
-            creative: $data['creative'],
+            creative: Creative::fromArray($data['creative']),
             lastUpdatedDateTime: $data['lastUpdatedDateTime'],
             state: State::from($data['state']),
-            activeCreative: $data['activeCreative'] ?? null,
+            activeCreative: isset($data['activeCreative']) ? Creative::fromArray($data['activeCreative']) : null,
             adGroupId: $data['adGroupId'] ?? null,
             campaignId: $data['campaignId'] ?? null,
             globalAdId: $data['globalAdId'] ?? null,

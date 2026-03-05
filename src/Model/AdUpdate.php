@@ -8,7 +8,7 @@ final class AdUpdate
 {
     public function __construct(
         private string $adId,
-        private ?string $creative = null,
+        private ?UpdateCreative $creative = null,
         private array $marketplaceConfigurations = [],
         private ?MarketplaceScope $marketplaceScope = null,
         private array $marketplaces = [],
@@ -30,12 +30,12 @@ final class AdUpdate
         return $this;
     }
 
-    public function getCreative(): ?string
+    public function getCreative(): ?UpdateCreative
     {
         return $this->creative;
     }
 
-    public function setCreative(?string $creative): self
+    public function setCreative(?UpdateCreative $creative): self
     {
         $this->creative = $creative;
 
@@ -127,7 +127,7 @@ final class AdUpdate
         ];
 
         if ($this->creative !== null) {
-            $data['creative'] = $this->creative;
+            $data['creative'] = $this->creative->toArray();
         }
         if ($this->marketplaceConfigurations !== []) {
             $data['marketplaceConfigurations'] = array_map(
@@ -164,7 +164,7 @@ final class AdUpdate
     {
         return new self(
             adId: $data['adId'],
-            creative: $data['creative'] ?? null,
+            creative: isset($data['creative']) ? UpdateCreative::fromArray($data['creative']) : null,
             marketplaceConfigurations: array_map(
                 static fn(array $v) => CreateMarketplaceAdConfigurations::fromArray($v),
                 $data['marketplaceConfigurations'] ?? [],

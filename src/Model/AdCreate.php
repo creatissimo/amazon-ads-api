@@ -9,7 +9,7 @@ final class AdCreate
     public function __construct(
         private AdProduct $adProduct,
         private AdType $adType,
-        private string $creative,
+        private CreateCreative $creative,
         private CreateState $state,
         private ?string $adGroupId = null,
         private array $marketplaceConfigurations = [],
@@ -44,12 +44,12 @@ final class AdCreate
         return $this;
     }
 
-    public function getCreative(): string
+    public function getCreative(): CreateCreative
     {
         return $this->creative;
     }
 
-    public function setCreative(string $creative): self
+    public function setCreative(CreateCreative $creative): self
     {
         $this->creative = $creative;
 
@@ -151,7 +151,7 @@ final class AdCreate
         $data = [
             'adProduct' => $this->adProduct->value,
             'adType' => $this->adType->value,
-            'creative' => $this->creative,
+            'creative' => $this->creative->toArray(),
             'state' => $this->state->value,
         ];
 
@@ -191,7 +191,7 @@ final class AdCreate
         return new self(
             adProduct: AdProduct::from($data['adProduct']),
             adType: AdType::from($data['adType']),
-            creative: $data['creative'],
+            creative: CreateCreative::fromArray($data['creative']),
             state: CreateState::from($data['state']),
             adGroupId: $data['adGroupId'] ?? null,
             marketplaceConfigurations: array_map(
