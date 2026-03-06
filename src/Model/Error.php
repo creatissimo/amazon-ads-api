@@ -49,6 +49,20 @@ final class Error
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'code' => $this->code->value,
+            'message' => $this->message,
+        ];
+
+        if ($this->fieldLocation !== null) {
+            $data['fieldLocation'] = $this->fieldLocation;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

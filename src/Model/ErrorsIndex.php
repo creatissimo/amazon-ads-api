@@ -41,6 +41,17 @@ final class ErrorsIndex
         return $this;
     }
 
+    public function toArray(): array
+    {
+        return [
+            'errors' => array_map(
+                static fn(Error $e) => $e->toArray(),
+                $this->errors,
+            ),
+            'index' => $this->index,
+        ];
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(
