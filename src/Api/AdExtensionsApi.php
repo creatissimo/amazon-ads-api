@@ -6,9 +6,9 @@ namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
 use Creatissimo\AmazonAdsApi\Model\AdExtensionCreate;
+use Creatissimo\AmazonAdsApi\Model\AdExtensionMultiStatusResponseWithPartialErrors;
 use Creatissimo\AmazonAdsApi\Model\AdExtensionSuccessResponse;
 use Creatissimo\AmazonAdsApi\Model\AdExtensionUpdate;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
 use Creatissimo\AmazonAdsApi\Model\QueryAdExtensionRequest;
 
 final class AdExtensionsApi
@@ -23,7 +23,7 @@ final class AdExtensionsApi
     }
 
     /** @param AdExtensionCreate[] $adExtensions */
-    public function create(array $adExtensions): MultiStatusResponse
+    public function create(array $adExtensions): AdExtensionMultiStatusResponseWithPartialErrors
     {
         $body = [
             'adExtensions' => array_map(
@@ -34,7 +34,7 @@ final class AdExtensionsApi
 
         $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return AdExtensionMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 
     public function query(QueryAdExtensionRequest $request): AdExtensionSuccessResponse
@@ -45,7 +45,7 @@ final class AdExtensionsApi
     }
 
     /** @param AdExtensionUpdate[] $adExtensions */
-    public function update(array $adExtensions): MultiStatusResponse
+    public function update(array $adExtensions): AdExtensionMultiStatusResponseWithPartialErrors
     {
         $body = [
             'adExtensions' => array_map(
@@ -56,6 +56,6 @@ final class AdExtensionsApi
 
         $response = $this->httpClient->post(self::PATH_UPDATE, $body)->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return AdExtensionMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 }

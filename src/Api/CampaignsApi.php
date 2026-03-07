@@ -6,7 +6,7 @@ namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
 use Creatissimo\AmazonAdsApi\Model\CampaignCreate;
-use Creatissimo\AmazonAdsApi\Model\CampaignMultiStatusResponse;
+use Creatissimo\AmazonAdsApi\Model\CampaignMultiStatusResponseWithPartialErrors;
 use Creatissimo\AmazonAdsApi\Model\CampaignSuccessResponse;
 use Creatissimo\AmazonAdsApi\Model\CampaignUpdate;
 use Creatissimo\AmazonAdsApi\Model\QueryCampaignRequest;
@@ -24,7 +24,7 @@ final class CampaignsApi
     }
 
     /** @param CampaignCreate[] $campaigns */
-    public function create(array $campaigns): CampaignMultiStatusResponse
+    public function create(array $campaigns): CampaignMultiStatusResponseWithPartialErrors
     {
         $body = [
             'campaigns' => array_map(
@@ -35,7 +35,7 @@ final class CampaignsApi
 
         $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
 
-        return CampaignMultiStatusResponse::fromArray($response->getData());
+        return CampaignMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 
     public function query(QueryCampaignRequest $request): CampaignSuccessResponse
@@ -46,7 +46,7 @@ final class CampaignsApi
     }
 
     /** @param CampaignUpdate[] $campaigns */
-    public function update(array $campaigns): CampaignMultiStatusResponse
+    public function update(array $campaigns): CampaignMultiStatusResponseWithPartialErrors
     {
         $body = [
             'campaigns' => array_map(
@@ -57,14 +57,14 @@ final class CampaignsApi
 
         $response = $this->httpClient->post(self::PATH_UPDATE, $body)->ensureMultiStatus();
 
-        return CampaignMultiStatusResponse::fromArray($response->getData());
+        return CampaignMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 
     /** @param string[] $campaignIds */
-    public function delete(array $campaignIds): CampaignMultiStatusResponse
+    public function delete(array $campaignIds): CampaignMultiStatusResponseWithPartialErrors
     {
         $response = $this->httpClient->post(self::PATH_DELETE, ['campaignIds' => $campaignIds])->ensureMultiStatus();
 
-        return CampaignMultiStatusResponse::fromArray($response->getData());
+        return CampaignMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 }

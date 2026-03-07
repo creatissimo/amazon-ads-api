@@ -6,9 +6,9 @@ namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
 use Creatissimo\AmazonAdsApi\Model\AdAssociationCreate;
+use Creatissimo\AmazonAdsApi\Model\AdAssociationMultiStatusResponse;
 use Creatissimo\AmazonAdsApi\Model\AdAssociationSuccessResponse;
 use Creatissimo\AmazonAdsApi\Model\AdAssociationUpdate;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
 use Creatissimo\AmazonAdsApi\Model\QueryAdAssociationRequest;
 
 final class AdAssociationsApi
@@ -24,7 +24,7 @@ final class AdAssociationsApi
     }
 
     /** @param AdAssociationCreate[] $adAssociations */
-    public function create(array $adAssociations): MultiStatusResponse
+    public function create(array $adAssociations): AdAssociationMultiStatusResponse
     {
         $body = [
             'adAssociations' => array_map(
@@ -35,7 +35,7 @@ final class AdAssociationsApi
 
         $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return AdAssociationMultiStatusResponse::fromArray($response->getData());
     }
 
     public function query(QueryAdAssociationRequest $request): AdAssociationSuccessResponse
@@ -46,7 +46,7 @@ final class AdAssociationsApi
     }
 
     /** @param AdAssociationUpdate[] $adAssociations */
-    public function update(array $adAssociations): MultiStatusResponse
+    public function update(array $adAssociations): AdAssociationMultiStatusResponse
     {
         $body = [
             'adAssociations' => array_map(
@@ -57,14 +57,14 @@ final class AdAssociationsApi
 
         $response = $this->httpClient->post(self::PATH_UPDATE, $body)->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return AdAssociationMultiStatusResponse::fromArray($response->getData());
     }
 
     /** @param string[] $adAssociationIds */
-    public function delete(array $adAssociationIds): MultiStatusResponse
+    public function delete(array $adAssociationIds): AdAssociationMultiStatusResponse
     {
         $response = $this->httpClient->post(self::PATH_DELETE, ['adAssociationIds' => $adAssociationIds])->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return AdAssociationMultiStatusResponse::fromArray($response->getData());
     }
 }

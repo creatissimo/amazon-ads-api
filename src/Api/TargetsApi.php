@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
 use Creatissimo\AmazonAdsApi\Model\QueryTargetRequest;
 use Creatissimo\AmazonAdsApi\Model\TargetCreate;
+use Creatissimo\AmazonAdsApi\Model\TargetMultiStatusResponseWithPartialErrors;
 use Creatissimo\AmazonAdsApi\Model\TargetSuccessResponse;
 use Creatissimo\AmazonAdsApi\Model\TargetUpdate;
 
@@ -24,7 +24,7 @@ final class TargetsApi
     }
 
     /** @param TargetCreate[] $targets */
-    public function create(array $targets): MultiStatusResponse
+    public function create(array $targets): TargetMultiStatusResponseWithPartialErrors
     {
         $body = [
             'targets' => array_map(
@@ -35,7 +35,7 @@ final class TargetsApi
 
         $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return TargetMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 
     public function query(QueryTargetRequest $request): TargetSuccessResponse
@@ -46,7 +46,7 @@ final class TargetsApi
     }
 
     /** @param TargetUpdate[] $targets */
-    public function update(array $targets): MultiStatusResponse
+    public function update(array $targets): TargetMultiStatusResponseWithPartialErrors
     {
         $body = [
             'targets' => array_map(
@@ -57,14 +57,14 @@ final class TargetsApi
 
         $response = $this->httpClient->post(self::PATH_UPDATE, $body)->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return TargetMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 
     /** @param string[] $targetIds */
-    public function delete(array $targetIds): MultiStatusResponse
+    public function delete(array $targetIds): TargetMultiStatusResponseWithPartialErrors
     {
         $response = $this->httpClient->post(self::PATH_DELETE, ['targetIds' => $targetIds])->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return TargetMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 }

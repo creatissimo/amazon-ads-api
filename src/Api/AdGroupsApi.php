@@ -6,9 +6,9 @@ namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
 use Creatissimo\AmazonAdsApi\Model\AdGroupCreate;
+use Creatissimo\AmazonAdsApi\Model\AdGroupMultiStatusResponseWithPartialErrors;
 use Creatissimo\AmazonAdsApi\Model\AdGroupSuccessResponse;
 use Creatissimo\AmazonAdsApi\Model\AdGroupUpdate;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
 use Creatissimo\AmazonAdsApi\Model\QueryAdGroupRequest;
 
 final class AdGroupsApi
@@ -24,7 +24,7 @@ final class AdGroupsApi
     }
 
     /** @param AdGroupCreate[] $adGroups */
-    public function create(array $adGroups): MultiStatusResponse
+    public function create(array $adGroups): AdGroupMultiStatusResponseWithPartialErrors
     {
         $body = [
             'adGroups' => array_map(
@@ -35,7 +35,7 @@ final class AdGroupsApi
 
         $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return AdGroupMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 
     public function query(QueryAdGroupRequest $request): AdGroupSuccessResponse
@@ -46,7 +46,7 @@ final class AdGroupsApi
     }
 
     /** @param AdGroupUpdate[] $adGroups */
-    public function update(array $adGroups): MultiStatusResponse
+    public function update(array $adGroups): AdGroupMultiStatusResponseWithPartialErrors
     {
         $body = [
             'adGroups' => array_map(
@@ -57,14 +57,14 @@ final class AdGroupsApi
 
         $response = $this->httpClient->post(self::PATH_UPDATE, $body)->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return AdGroupMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 
     /** @param string[] $adGroupIds */
-    public function delete(array $adGroupIds): MultiStatusResponse
+    public function delete(array $adGroupIds): AdGroupMultiStatusResponseWithPartialErrors
     {
         $response = $this->httpClient->post(self::PATH_DELETE, ['adGroupIds' => $adGroupIds])->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return AdGroupMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 }

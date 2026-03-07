@@ -6,9 +6,9 @@ namespace Creatissimo\AmazonAdsApi\Api;
 
 use Creatissimo\AmazonAdsApi\Http\HttpClient;
 use Creatissimo\AmazonAdsApi\Model\AdCreate;
+use Creatissimo\AmazonAdsApi\Model\AdMultiStatusResponseWithPartialErrors;
 use Creatissimo\AmazonAdsApi\Model\AdSuccessResponse;
 use Creatissimo\AmazonAdsApi\Model\AdUpdate;
-use Creatissimo\AmazonAdsApi\Model\MultiStatusResponse;
 use Creatissimo\AmazonAdsApi\Model\QueryAdRequest;
 
 final class AdsApi
@@ -24,7 +24,7 @@ final class AdsApi
     }
 
     /** @param AdCreate[] $ads */
-    public function create(array $ads): MultiStatusResponse
+    public function create(array $ads): AdMultiStatusResponseWithPartialErrors
     {
         $body = [
             'ads' => array_map(
@@ -35,7 +35,7 @@ final class AdsApi
 
         $response = $this->httpClient->post(self::PATH_CREATE, $body)->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return AdMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 
     public function query(QueryAdRequest $request): AdSuccessResponse
@@ -46,7 +46,7 @@ final class AdsApi
     }
 
     /** @param AdUpdate[] $ads */
-    public function update(array $ads): MultiStatusResponse
+    public function update(array $ads): AdMultiStatusResponseWithPartialErrors
     {
         $body = [
             'ads' => array_map(
@@ -57,14 +57,14 @@ final class AdsApi
 
         $response = $this->httpClient->post(self::PATH_UPDATE, $body)->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return AdMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 
     /** @param string[] $adIds */
-    public function delete(array $adIds): MultiStatusResponse
+    public function delete(array $adIds): AdMultiStatusResponseWithPartialErrors
     {
         $response = $this->httpClient->post(self::PATH_DELETE, ['adIds' => $adIds])->ensureMultiStatus();
 
-        return MultiStatusResponse::fromArray($response->getData());
+        return AdMultiStatusResponseWithPartialErrors::fromArray($response->getData());
     }
 }
