@@ -36,6 +36,19 @@ final class ProductCategoryTarget
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'productCategoryRefinement' => $this->productCategoryRefinement->toArray(),
+        ];
+
+        if ($this->productGenreRefinement !== null) {
+            $data['productGenreRefinement'] = $this->productGenreRefinement->toArray();
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

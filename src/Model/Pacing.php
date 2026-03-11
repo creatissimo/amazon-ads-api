@@ -23,6 +23,15 @@ final class Pacing
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'deliveryProfile' => $this->deliveryProfile->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

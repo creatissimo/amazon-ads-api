@@ -22,6 +22,16 @@ final class DayPartTarget
         return $this->timeOfDay;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'dayOfWeek' => $this->dayOfWeek,
+            'timeOfDay' => $this->timeOfDay,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -75,6 +75,24 @@ final class CampaignFlight
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'budget' => $this->budget->toArray(),
+            'endDateTime' => $this->endDateTime,
+            'startDateTime' => $this->startDateTime,
+        ];
+
+        if ($this->flightId !== null) {
+            $data['flightId'] = $this->flightId;
+        }
+        if ($this->name !== null) {
+            $data['name'] = $this->name;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

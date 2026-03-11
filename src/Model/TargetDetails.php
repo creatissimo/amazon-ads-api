@@ -157,6 +157,13 @@ final class TargetDetails
         return $this->target;
     }
 
+    public function toArray(): array
+    {
+        return [
+            $this->type => $this->target->toArray(),
+        ];
+    }
+
     public static function fromArray(array $data): self
     {
         if (isset($data['adInitiationTarget'])) {

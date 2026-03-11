@@ -36,6 +36,20 @@ final class AdGroupBudgetSettings
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->budgetAllocation !== null) {
+            $data['budgetAllocation'] = $this->budgetAllocation->value;
+        }
+        if ($this->dailyMinSpendValue !== null) {
+            $data['dailyMinSpendValue'] = $this->dailyMinSpendValue;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

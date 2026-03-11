@@ -36,6 +36,16 @@ final class FlightBudget
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'budgetType' => $this->budgetType->value,
+            'budgetValue' => $this->budgetValue->toArray(),
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

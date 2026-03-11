@@ -161,6 +161,54 @@ final class DSPFlightForecast
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'flightId' => $this->flightId,
+            'forecastEndDateTime' => $this->forecastEndDateTime,
+            'forecastStartDateTime' => $this->forecastStartDateTime,
+        ];
+
+        if ($this->curves !== []) {
+            $data['curves'] = array_map(
+                static fn(DSPCurve $v) => $v->toArray(),
+                $this->curves,
+            );
+        }
+        if ($this->deliverInFullConfidence !== null) {
+            $data['deliverInFullConfidence'] = $this->deliverInFullConfidence->toArray();
+        }
+        if ($this->insights !== null) {
+            $data['insights'] = $this->insights->toArray();
+        }
+        if ($this->metrics !== []) {
+            $data['metrics'] = array_map(
+                static fn(DSPForecastMetric $v) => $v->toArray(),
+                $this->metrics,
+            );
+        }
+        if ($this->replanning !== []) {
+            $data['replanning'] = array_map(
+                static fn(DSPReplanning $v) => $v->toArray(),
+                $this->replanning,
+            );
+        }
+        if ($this->spend !== null) {
+            $data['spend'] = $this->spend;
+        }
+        if ($this->totalBudget !== null) {
+            $data['totalBudget'] = $this->totalBudget->toArray();
+        }
+        if ($this->warnings !== []) {
+            $data['warnings'] = array_map(
+                static fn(DSPWarning $v) => $v->toArray(),
+                $this->warnings,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

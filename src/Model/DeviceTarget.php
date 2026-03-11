@@ -40,6 +40,28 @@ final class DeviceTarget
         return $this->mobileOs;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'deviceType' => $this->deviceType,
+        ];
+
+        if ($this->deviceOrientation !== null) {
+            $data['deviceOrientation'] = $this->deviceOrientation;
+        }
+        if ($this->mobileDevice !== null) {
+            $data['mobileDevice'] = $this->mobileDevice;
+        }
+        if ($this->mobileEnvironment !== null) {
+            $data['mobileEnvironment'] = $this->mobileEnvironment;
+        }
+        if ($this->mobileOs !== null) {
+            $data['mobileOs'] = $this->mobileOs;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

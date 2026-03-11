@@ -49,6 +49,20 @@ final class AdGroupBidMarketplaceSetting
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'currencyCode' => $this->currencyCode->value,
+            'marketplace' => $this->marketplace->value,
+        ];
+
+        if ($this->defaultBid !== null) {
+            $data['defaultBid'] = $this->defaultBid;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

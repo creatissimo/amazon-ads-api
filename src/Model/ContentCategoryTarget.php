@@ -16,6 +16,15 @@ final class ContentCategoryTarget
         return $this->contentCategoryId;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'contentCategoryId' => $this->contentCategoryId,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

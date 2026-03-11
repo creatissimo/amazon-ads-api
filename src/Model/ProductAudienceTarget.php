@@ -34,6 +34,18 @@ final class ProductAudienceTarget
         return $this->matchType;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'asin' => $this->asin,
+            'event' => $this->event,
+            'lookback' => $this->lookback,
+            'matchType' => $this->matchType,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

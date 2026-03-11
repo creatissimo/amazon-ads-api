@@ -153,6 +153,32 @@ final class DSPCommitment
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'commitmentId' => $this->commitmentId,
+            'commitmentName' => $this->commitmentName,
+            'committedSpend' => $this->committedSpend,
+            'currencyCode' => $this->currencyCode->value,
+            'endDateTime' => $this->endDateTime,
+            'fulfillmentLevel' => $this->fulfillmentLevel->value,
+            'spendCalculationMode' => $this->spendCalculationMode->value,
+            'startDateTime' => $this->startDateTime,
+        ];
+
+        if ($this->advertiserIds !== []) {
+            $data['advertiserIds'] = $this->advertiserIds;
+        }
+        if ($this->campaignIds !== []) {
+            $data['campaignIds'] = $this->campaignIds;
+        }
+        if ($this->dealIds !== []) {
+            $data['dealIds'] = $this->dealIds;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

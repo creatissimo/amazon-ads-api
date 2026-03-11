@@ -51,6 +51,25 @@ final class BrandStore
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'storeId' => $this->storeId,
+        ];
+
+        if ($this->pageInfos !== []) {
+            $data['pageInfos'] = array_map(
+                static fn(BrandStorePageInfo $v) => $v->toArray(),
+                $this->pageInfos,
+            );
+        }
+        if ($this->storeName !== null) {
+            $data['storeName'] = $this->storeName;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

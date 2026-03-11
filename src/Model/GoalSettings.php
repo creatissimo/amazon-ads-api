@@ -62,6 +62,23 @@ final class GoalSettings
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'goal' => $this->goal->value,
+            'kpi' => $this->kpi->value,
+        ];
+
+        if ($this->currencyCode !== null) {
+            $data['currencyCode'] = $this->currencyCode->value;
+        }
+        if ($this->kpiValue !== null) {
+            $data['kpiValue'] = $this->kpiValue;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

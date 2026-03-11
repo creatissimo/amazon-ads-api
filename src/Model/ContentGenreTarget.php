@@ -16,6 +16,15 @@ final class ContentGenreTarget
         return $this->contentGenre;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'contentGenre' => $this->contentGenre,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -36,6 +36,20 @@ final class StoreEditionSchedule
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->endAt !== null) {
+            $data['endAt'] = $this->endAt;
+        }
+        if ($this->startAt !== null) {
+            $data['startAt'] = $this->startAt;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

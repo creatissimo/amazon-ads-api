@@ -40,6 +40,26 @@ final class DSPFlightForecastInsights
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->forecastExplainabilityInsights !== []) {
+            $data['forecastExplainabilityInsights'] = array_map(
+                static fn(DSPForecastInsightsGroup $v) => $v->toArray(),
+                $this->forecastExplainabilityInsights,
+            );
+        }
+        if ($this->topExplainabilityFactors !== []) {
+            $data['topExplainabilityFactors'] = array_map(
+                static fn(DSPInsightFeature $v) => $v->value,
+                $this->topExplainabilityFactors,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

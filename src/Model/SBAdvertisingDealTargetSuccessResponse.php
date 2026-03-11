@@ -38,6 +38,23 @@ final class SBAdvertisingDealTargetSuccessResponse
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->advertisingDealTargets !== []) {
+            $data['advertisingDealTargets'] = array_map(
+                static fn(SBAdvertisingDealTarget $v) => $v->toArray(),
+                $this->advertisingDealTargets,
+            );
+        }
+        if ($this->nextToken !== null) {
+            $data['nextToken'] = $this->nextToken;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

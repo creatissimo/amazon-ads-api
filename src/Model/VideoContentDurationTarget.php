@@ -16,6 +16,15 @@ final class VideoContentDurationTarget
         return $this->duration;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'duration' => $this->duration,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

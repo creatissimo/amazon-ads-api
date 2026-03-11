@@ -120,6 +120,44 @@ final class DSPReplanning
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'content' => $this->content,
+            'title' => $this->title,
+        ];
+
+        if ($this->curves !== []) {
+            $data['curves'] = array_map(
+                static fn(DSPCurve $v) => $v->toArray(),
+                $this->curves,
+            );
+        }
+        if ($this->deliverInFullConfidence !== null) {
+            $data['deliverInFullConfidence'] = $this->deliverInFullConfidence->toArray();
+        }
+        if ($this->metrics !== []) {
+            $data['metrics'] = array_map(
+                static fn(DSPForecastMetric $v) => $v->toArray(),
+                $this->metrics,
+            );
+        }
+        if ($this->scenarioFlight !== null) {
+            $data['scenarioFlight'] = $this->scenarioFlight->toArray();
+        }
+        if ($this->scenarioType !== null) {
+            $data['scenarioType'] = $this->scenarioType;
+        }
+        if ($this->selectedMetrics !== []) {
+            $data['selectedMetrics'] = array_map(
+                static fn(DSPSelectedForecastMetric $v) => $v->value,
+                $this->selectedMetrics,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

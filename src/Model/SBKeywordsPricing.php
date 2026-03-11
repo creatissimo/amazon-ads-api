@@ -36,6 +36,16 @@ final class SBKeywordsPricing
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'price' => $this->price->toArray(),
+            'validKeywords' => $this->validKeywords,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -25,6 +25,20 @@ final class DSPReplanningSettings
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->flights !== []) {
+            $data['flights'] = array_map(
+                static fn(DSPForecastFlight $v) => $v->toArray(),
+                $this->flights,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

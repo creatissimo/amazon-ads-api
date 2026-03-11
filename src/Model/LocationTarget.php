@@ -36,6 +36,19 @@ final class LocationTarget
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'locationId' => $this->locationId,
+        ];
+
+        if ($this->locationIdResolved !== null) {
+            $data['locationIdResolved'] = $this->locationIdResolved;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

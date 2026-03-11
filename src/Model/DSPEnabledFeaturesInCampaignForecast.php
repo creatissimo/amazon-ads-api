@@ -75,6 +75,29 @@ final class DSPEnabledFeaturesInCampaignForecast
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->campaignSettingsCache !== null) {
+            $data['campaignSettingsCache'] = $this->campaignSettingsCache;
+        }
+        if ($this->curve !== null) {
+            $data['curve'] = $this->curve;
+        }
+        if ($this->insights !== null) {
+            $data['insights'] = $this->insights;
+        }
+        if ($this->metrics !== null) {
+            $data['metrics'] = $this->metrics->toArray();
+        }
+        if ($this->replanning !== null) {
+            $data['replanning'] = $this->replanning;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

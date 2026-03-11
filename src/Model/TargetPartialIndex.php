@@ -51,6 +51,20 @@ final class TargetPartialIndex
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'errors' => array_map(
+                static fn(Error $v) => $v->toArray(),
+                $this->errors,
+            ),
+            'index' => $this->index,
+            'target' => $this->target->toArray(),
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

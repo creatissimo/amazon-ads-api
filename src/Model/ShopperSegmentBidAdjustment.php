@@ -36,6 +36,16 @@ final class ShopperSegmentBidAdjustment
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'percentage' => $this->percentage,
+            'shopperSegment' => $this->shopperSegment->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

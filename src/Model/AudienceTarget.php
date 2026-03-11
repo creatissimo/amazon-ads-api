@@ -34,6 +34,25 @@ final class AudienceTarget
         return $this->inGroupOperator;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'audienceId' => $this->audienceId,
+        ];
+
+        if ($this->acrossGroupOperator !== null) {
+            $data['acrossGroupOperator'] = $this->acrossGroupOperator;
+        }
+        if ($this->groupId !== null) {
+            $data['groupId'] = $this->groupId;
+        }
+        if ($this->inGroupOperator !== null) {
+            $data['inGroupOperator'] = $this->inGroupOperator;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

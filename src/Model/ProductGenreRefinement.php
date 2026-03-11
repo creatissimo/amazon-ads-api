@@ -36,6 +36,19 @@ final class ProductGenreRefinement
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'productGenreId' => $this->productGenreId,
+        ];
+
+        if ($this->productGenreIdResolved !== null) {
+            $data['productGenreIdResolved'] = $this->productGenreIdResolved;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

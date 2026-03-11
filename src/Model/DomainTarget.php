@@ -22,6 +22,16 @@ final class DomainTarget
         return $this->domainTargetType;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'domainTargetDetails' => $this->domainTargetDetails,
+            'domainTargetType' => $this->domainTargetType,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

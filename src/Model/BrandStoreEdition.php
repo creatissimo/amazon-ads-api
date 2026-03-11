@@ -62,6 +62,21 @@ final class BrandStoreEdition
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'editionId' => $this->editionId,
+            'editionName' => $this->editionName,
+            'storeId' => $this->storeId,
+        ];
+
+        if ($this->storeEditionSchedule !== null) {
+            $data['storeEditionSchedule'] = $this->storeEditionSchedule->toArray();
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

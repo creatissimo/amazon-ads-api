@@ -16,6 +16,15 @@ final class VideoAdFormatTarget
         return $this->videoAdFormat;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'videoAdFormat' => $this->videoAdFormat,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

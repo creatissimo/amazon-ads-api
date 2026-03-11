@@ -75,6 +75,26 @@ final class DSPWarning
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'code' => $this->code,
+            'message' => $this->message,
+        ];
+
+        if ($this->adGroupIds !== []) {
+            $data['adGroupIds'] = $this->adGroupIds;
+        }
+        if ($this->messageParameters !== []) {
+            $data['messageParameters'] = $this->messageParameters;
+        }
+        if ($this->warningLevel !== null) {
+            $data['warningLevel'] = $this->warningLevel;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -49,6 +49,17 @@ final class MarketplaceCampaignConfigurations
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'campaignId' => $this->campaignId,
+            'marketplace' => $this->marketplace->value,
+            'overrides' => $this->overrides->toArray(),
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -166,6 +166,37 @@ final class AdExtension
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adExtensionId' => $this->adExtensionId,
+            'adExtensionType' => $this->adExtensionType->value,
+            'adProduct' => $this->adProduct->value,
+            'state' => $this->state->value,
+            'marketplaceScope' => $this->marketplaceScope->value,
+            'creationDateTime' => $this->creationDateTime,
+            'lastUpdatedDateTime' => $this->lastUpdatedDateTime,
+        ];
+
+        if ($this->adExtensionSettings !== []) {
+            $data['adExtensionSettings'] = $this->adExtensionSettings;
+        }
+        if ($this->adExtensionStatus !== null) {
+            $data['adExtensionStatus'] = $this->adExtensionStatus->value;
+        }
+        if ($this->adGroupId !== null) {
+            $data['adGroupId'] = $this->adGroupId;
+        }
+        if ($this->adId !== null) {
+            $data['adId'] = $this->adId;
+        }
+        if ($this->marketplaces !== []) {
+            $data['marketplaces'] = $this->marketplaces;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

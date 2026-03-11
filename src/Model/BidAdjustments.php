@@ -70,6 +70,38 @@ final class BidAdjustments
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->audienceBidAdjustments !== []) {
+            $data['audienceBidAdjustments'] = array_map(
+                static fn(AudienceBidAdjustment $v) => $v->toArray(),
+                $this->audienceBidAdjustments,
+            );
+        }
+        if ($this->creativeBidAdjustments !== []) {
+            $data['creativeBidAdjustments'] = array_map(
+                static fn(CreativeBidAdjustment $v) => $v->toArray(),
+                $this->creativeBidAdjustments,
+            );
+        }
+        if ($this->placementBidAdjustments !== []) {
+            $data['placementBidAdjustments'] = array_map(
+                static fn(PlacementBidAdjustment $v) => $v->toArray(),
+                $this->placementBidAdjustments,
+            );
+        }
+        if ($this->shopperSegmentBidAdjustments !== []) {
+            $data['shopperSegmentBidAdjustments'] = array_map(
+                static fn(ShopperSegmentBidAdjustment $v) => $v->toArray(),
+                $this->shopperSegmentBidAdjustments,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -36,6 +36,16 @@ final class AdMultiStatusSuccess
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'ad' => $this->ad->toArray(),
+            'index' => $this->index,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

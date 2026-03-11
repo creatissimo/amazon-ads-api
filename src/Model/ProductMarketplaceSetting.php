@@ -36,6 +36,16 @@ final class ProductMarketplaceSetting
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'marketplace' => $this->marketplace->value,
+            'productId' => $this->productId,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

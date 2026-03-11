@@ -36,6 +36,16 @@ final class BrandStorePageInfo
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'tag' => $this->tag,
+            'title' => $this->title,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

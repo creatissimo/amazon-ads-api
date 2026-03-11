@@ -64,6 +64,29 @@ final class CampaignOptimizations
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->bidSettings !== null) {
+            $data['bidSettings'] = $this->bidSettings->toArray();
+        }
+        if ($this->budgetSettings !== null) {
+            $data['budgetSettings'] = $this->budgetSettings->toArray();
+        }
+        if ($this->goalSettings !== null) {
+            $data['goalSettings'] = $this->goalSettings->toArray();
+        }
+        if ($this->primaryInventoryTypes !== []) {
+            $data['primaryInventoryTypes'] = array_map(
+                static fn(PrimaryInventoryType $v) => $v->value,
+                $this->primaryInventoryTypes,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

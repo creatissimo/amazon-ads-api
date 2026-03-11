@@ -23,6 +23,15 @@ final class SBAdvertisingDealStatus
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'status' => $this->status->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

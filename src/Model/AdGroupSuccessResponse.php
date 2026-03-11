@@ -41,6 +41,22 @@ final class AdGroupSuccessResponse
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adGroups' => array_map(
+                static fn(AdGroup $v) => $v->toArray(),
+                $this->adGroups,
+            ),
+        ];
+
+        if ($this->nextToken !== null) {
+            $data['nextToken'] = $this->nextToken;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

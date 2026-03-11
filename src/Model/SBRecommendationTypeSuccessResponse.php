@@ -38,6 +38,23 @@ final class SBRecommendationTypeSuccessResponse
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->nextToken !== null) {
+            $data['nextToken'] = $this->nextToken;
+        }
+        if ($this->recommendationTypes !== []) {
+            $data['recommendationTypes'] = array_map(
+                static fn(SBRecommendationType $v) => $v->toArray(),
+                $this->recommendationTypes,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

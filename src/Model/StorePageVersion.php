@@ -36,6 +36,16 @@ final class StorePageVersion
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'pageId' => $this->pageId,
+            'version' => $this->version,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

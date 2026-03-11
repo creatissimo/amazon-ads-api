@@ -90,6 +90,35 @@ final class MarketplaceCampaignFieldOverrides
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->endDateTime !== null) {
+            $data['endDateTime'] = $this->endDateTime;
+        }
+        if ($this->name !== null) {
+            $data['name'] = $this->name;
+        }
+        if ($this->optimizations !== null) {
+            $data['optimizations'] = $this->optimizations->toArray();
+        }
+        if ($this->startDateTime !== null) {
+            $data['startDateTime'] = $this->startDateTime;
+        }
+        if ($this->state !== null) {
+            $data['state'] = $this->state->value;
+        }
+        if ($this->tags !== []) {
+            $data['tags'] = array_map(
+                static fn(Tag $v) => $v->toArray(),
+                $this->tags,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

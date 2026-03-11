@@ -16,6 +16,15 @@ final class AdInitiationTarget
         return $this->videoInitiationType;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'videoInitiationType' => $this->videoInitiationType,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

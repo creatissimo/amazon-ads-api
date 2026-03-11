@@ -16,6 +16,15 @@ final class ContentInstreamPositionTarget
         return $this->instreamPosition;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'instreamPosition' => $this->instreamPosition,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

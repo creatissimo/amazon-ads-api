@@ -38,6 +38,23 @@ final class ProductCategoryRefinementValue
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->productCategoryRefinement !== null) {
+            $data['productCategoryRefinement'] = $this->productCategoryRefinement->toArray();
+        }
+        if ($this->marketplaceSettings !== []) {
+            $data['marketplaceSettings'] = array_map(
+                static fn(ProductCategoryRefinementMarketplaceSetting $v) => $v->toArray(),
+                $this->marketplaceSettings,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

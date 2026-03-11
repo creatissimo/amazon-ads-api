@@ -49,6 +49,17 @@ final class CampaignFee
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'feeType' => $this->feeType->value,
+            'feeValue' => $this->feeValue,
+            'feeValueType' => $this->feeValueType->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

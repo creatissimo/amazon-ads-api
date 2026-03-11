@@ -22,6 +22,16 @@ final class InventorySourceTarget
         return $this->inventorySourceType;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'inventorySourceId' => $this->inventorySourceId,
+            'inventorySourceType' => $this->inventorySourceType,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

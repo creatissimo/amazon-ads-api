@@ -23,6 +23,17 @@ final class SBRecommendedObject
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->recommendedObjectSettings !== null) {
+            $data['recommendedObjectSettings'] = $this->recommendedObjectSettings->toArray();
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

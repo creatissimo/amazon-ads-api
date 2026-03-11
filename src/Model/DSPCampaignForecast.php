@@ -92,6 +92,33 @@ final class DSPCampaignForecast
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'campaignDisplayName' => $this->campaignDisplayName,
+            'campaignForecastDescription' => $this->campaignForecastDescription->toArray(),
+            'creationDateTime' => $this->creationDateTime,
+        ];
+
+        if ($this->availableForecastFlights !== []) {
+            $data['availableForecastFlights'] = array_map(
+                static fn(DSPForecastFlight $v) => $v->toArray(),
+                $this->availableForecastFlights,
+            );
+        }
+        if ($this->flightForecasts !== []) {
+            $data['flightForecasts'] = array_map(
+                static fn(DSPFlightForecast $v) => $v->toArray(),
+                $this->flightForecasts,
+            );
+        }
+        if ($this->hasExistingGuidance !== null) {
+            $data['hasExistingGuidance'] = $this->hasExistingGuidance;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

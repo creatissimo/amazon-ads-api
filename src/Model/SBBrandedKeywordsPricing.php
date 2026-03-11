@@ -103,6 +103,31 @@ final class SBBrandedKeywordsPricing
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'brandedKeywordsPricingId' => $this->brandedKeywordsPricingId,
+            'endDateTime' => $this->endDateTime,
+            'keywords' => $this->keywords,
+            'startDateTime' => $this->startDateTime,
+        ];
+
+        if ($this->advertisingDealId !== null) {
+            $data['advertisingDealId'] = $this->advertisingDealId;
+        }
+        if ($this->keywordsPricing !== null) {
+            $data['keywordsPricing'] = $this->keywordsPricing->toArray();
+        }
+        if ($this->rejectedKeywords !== []) {
+            $data['rejectedKeywords'] = array_map(
+                static fn(SBRejectedKeyword $v) => $v->toArray(),
+                $this->rejectedKeywords,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

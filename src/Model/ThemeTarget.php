@@ -23,6 +23,15 @@ final class ThemeTarget
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'matchType' => $this->matchType->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

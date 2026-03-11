@@ -62,6 +62,25 @@ final class StorePageContent
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'template' => $this->template->value,
+        ];
+
+        if ($this->description !== null) {
+            $data['description'] = $this->description;
+        }
+        if ($this->title !== null) {
+            $data['title'] = $this->title;
+        }
+        if ($this->widgets !== []) {
+            $data['widgets'] = $this->widgets;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

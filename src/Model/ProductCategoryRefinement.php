@@ -179,6 +179,53 @@ final class ProductCategoryRefinement
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->productAgeRangeId !== null) {
+            $data['productAgeRangeId'] = $this->productAgeRangeId;
+        }
+        if ($this->productAgeRangeIdResolved !== null) {
+            $data['productAgeRangeIdResolved'] = $this->productAgeRangeIdResolved;
+        }
+        if ($this->productBrandId !== null) {
+            $data['productBrandId'] = $this->productBrandId;
+        }
+        if ($this->productBrandIdResolved !== null) {
+            $data['productBrandIdResolved'] = $this->productBrandIdResolved;
+        }
+        if ($this->productCategoryId !== null) {
+            $data['productCategoryId'] = $this->productCategoryId;
+        }
+        if ($this->productCategoryIdResolved !== null) {
+            $data['productCategoryIdResolved'] = $this->productCategoryIdResolved;
+        }
+        if ($this->productGenreId !== null) {
+            $data['productGenreId'] = $this->productGenreId;
+        }
+        if ($this->productGenreIdResolved !== null) {
+            $data['productGenreIdResolved'] = $this->productGenreIdResolved;
+        }
+        if ($this->productPriceGreaterThan !== null) {
+            $data['productPriceGreaterThan'] = $this->productPriceGreaterThan;
+        }
+        if ($this->productPriceLessThan !== null) {
+            $data['productPriceLessThan'] = $this->productPriceLessThan;
+        }
+        if ($this->productPrimeShippingEligible !== null) {
+            $data['productPrimeShippingEligible'] = $this->productPrimeShippingEligible;
+        }
+        if ($this->productRatingGreaterThan !== null) {
+            $data['productRatingGreaterThan'] = $this->productRatingGreaterThan;
+        }
+        if ($this->productRatingLessThan !== null) {
+            $data['productRatingLessThan'] = $this->productRatingLessThan;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

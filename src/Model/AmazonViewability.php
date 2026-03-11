@@ -36,6 +36,16 @@ final class AmazonViewability
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'includeUnmeasurableImpressions' => $this->includeUnmeasurableImpressions,
+            'viewabilityTier' => $this->viewabilityTier->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

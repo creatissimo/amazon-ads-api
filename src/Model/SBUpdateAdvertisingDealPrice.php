@@ -36,6 +36,20 @@ final class SBUpdateAdvertisingDealPrice
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->priceType !== null) {
+            $data['priceType'] = $this->priceType->value;
+        }
+        if ($this->value !== null) {
+            $data['value'] = $this->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

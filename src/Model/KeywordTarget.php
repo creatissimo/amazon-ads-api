@@ -62,6 +62,23 @@ final class KeywordTarget
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'keyword' => $this->keyword,
+            'matchType' => $this->matchType->value,
+        ];
+
+        if ($this->nativeLanguageKeyword !== null) {
+            $data['nativeLanguageKeyword'] = $this->nativeLanguageKeyword;
+        }
+        if ($this->nativeLanguageLocale !== null) {
+            $data['nativeLanguageLocale'] = $this->nativeLanguageLocale->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

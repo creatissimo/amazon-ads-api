@@ -16,6 +16,15 @@ final class NativeContentPositionTarget
         return $this->nativePosition;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'nativePosition' => $this->nativePosition,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

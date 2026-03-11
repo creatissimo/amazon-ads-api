@@ -22,6 +22,16 @@ final class ThirdPartyTarget
         return $this->thirdPartyTargetType;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'thirdPartyTargetDetails' => $this->thirdPartyTargetDetails,
+            'thirdPartyTargetType' => $this->thirdPartyTargetType,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

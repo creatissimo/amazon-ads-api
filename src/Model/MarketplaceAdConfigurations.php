@@ -49,6 +49,17 @@ final class MarketplaceAdConfigurations
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adId' => $this->adId,
+            'marketplace' => $this->marketplace->value,
+            'overrides' => $this->overrides->toArray(),
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

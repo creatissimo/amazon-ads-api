@@ -36,6 +36,16 @@ final class SBBrandedKeywordsPricingMultiStatusSuccess
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'brandedKeywordsPricing' => $this->brandedKeywordsPricing->toArray(),
+            'index' => $this->index,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

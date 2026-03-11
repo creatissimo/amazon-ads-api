@@ -38,6 +38,23 @@ final class BrandStoreSuccessResponse
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->brandStores !== []) {
+            $data['brandStores'] = array_map(
+                static fn(BrandStore $v) => $v->toArray(),
+                $this->brandStores,
+            );
+        }
+        if ($this->nextToken !== null) {
+            $data['nextToken'] = $this->nextToken;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

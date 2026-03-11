@@ -237,6 +237,61 @@ final class Ad
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adId' => $this->adId,
+            'adProduct' => $this->adProduct->value,
+            'adType' => $this->adType->value,
+            'creationDateTime' => $this->creationDateTime,
+            'creative' => $this->creative->toArray(),
+            'lastUpdatedDateTime' => $this->lastUpdatedDateTime,
+            'state' => $this->state->value,
+        ];
+
+        if ($this->activeCreative !== null) {
+            $data['activeCreative'] = $this->activeCreative->toArray();
+        }
+        if ($this->adGroupId !== null) {
+            $data['adGroupId'] = $this->adGroupId;
+        }
+        if ($this->campaignId !== null) {
+            $data['campaignId'] = $this->campaignId;
+        }
+        if ($this->globalAdId !== null) {
+            $data['globalAdId'] = $this->globalAdId;
+        }
+        if ($this->marketplaceConfigurations !== []) {
+            $data['marketplaceConfigurations'] = array_map(
+                static fn(MarketplaceAdConfigurations $v) => $v->toArray(),
+                $this->marketplaceConfigurations,
+            );
+        }
+        if ($this->marketplaceScope !== null) {
+            $data['marketplaceScope'] = $this->marketplaceScope->value;
+        }
+        if ($this->marketplaces !== []) {
+            $data['marketplaces'] = array_map(
+                static fn(Marketplace $v) => $v->value,
+                $this->marketplaces,
+            );
+        }
+        if ($this->name !== null) {
+            $data['name'] = $this->name;
+        }
+        if ($this->status !== null) {
+            $data['status'] = $this->status->toArray();
+        }
+        if ($this->tags !== []) {
+            $data['tags'] = array_map(
+                static fn(Tag $v) => $v->toArray(),
+                $this->tags,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

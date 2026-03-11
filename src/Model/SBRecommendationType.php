@@ -36,6 +36,16 @@ final class SBRecommendationType
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'recommendationTypeId' => $this->recommendationTypeId,
+            'recommendationTypeTitle' => $this->recommendationTypeTitle,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

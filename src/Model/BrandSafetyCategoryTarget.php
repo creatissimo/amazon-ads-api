@@ -16,6 +16,15 @@ final class BrandSafetyCategoryTarget
         return $this->brandSafetyCategory;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'brandSafetyCategory' => $this->brandSafetyCategory,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

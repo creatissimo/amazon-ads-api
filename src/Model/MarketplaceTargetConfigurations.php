@@ -49,6 +49,17 @@ final class MarketplaceTargetConfigurations
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'marketplace' => $this->marketplace->value,
+            'overrides' => $this->overrides->toArray(),
+            'targetId' => $this->targetId,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

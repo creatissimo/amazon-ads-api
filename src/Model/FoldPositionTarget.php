@@ -16,6 +16,15 @@ final class FoldPositionTarget
         return $this->foldPosition;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'foldPosition' => $this->foldPosition,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

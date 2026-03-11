@@ -23,6 +23,17 @@ final class DSPMonetaryBudgetValue
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->monetaryBudget !== null) {
+            $data['monetaryBudget'] = $this->monetaryBudget->toArray();
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

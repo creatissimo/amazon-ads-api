@@ -140,6 +140,39 @@ final class TargetingSettings
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'amazonViewability' => $this->amazonViewability->toArray(),
+            'timeZoneType' => $this->timeZoneType->value,
+            'userLocationSignal' => $this->userLocationSignal->value,
+        ];
+
+        if ($this->automatedTargetingTactic !== null) {
+            $data['automatedTargetingTactic'] = $this->automatedTargetingTactic->value;
+        }
+        if ($this->defaultAudienceTargetingMatchType !== null) {
+            $data['defaultAudienceTargetingMatchType'] = $this->defaultAudienceTargetingMatchType->value;
+        }
+        if ($this->enableLanguageTargeting !== null) {
+            $data['enableLanguageTargeting'] = $this->enableLanguageTargeting;
+        }
+        if ($this->siteLanguage !== null) {
+            $data['siteLanguage'] = $this->siteLanguage->value;
+        }
+        if ($this->tacticsConvertersExclusionType !== null) {
+            $data['tacticsConvertersExclusionType'] = $this->tacticsConvertersExclusionType->value;
+        }
+        if ($this->targetedPGDealId !== null) {
+            $data['targetedPGDealId'] = $this->targetedPGDealId;
+        }
+        if ($this->videoCompletionTier !== null) {
+            $data['videoCompletionTier'] = $this->videoCompletionTier->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

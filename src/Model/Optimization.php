@@ -49,6 +49,23 @@ final class Optimization
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->bidStrategy !== null) {
+            $data['bidStrategy'] = $this->bidStrategy->value;
+        }
+        if ($this->budgetSettings !== null) {
+            $data['budgetSettings'] = $this->budgetSettings->toArray();
+        }
+        if ($this->goalSettings !== null) {
+            $data['goalSettings'] = $this->goalSettings->toArray();
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

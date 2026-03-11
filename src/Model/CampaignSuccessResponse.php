@@ -41,6 +41,22 @@ final class CampaignSuccessResponse
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'campaigns' => array_map(
+                static fn(Campaign $v) => $v->toArray(),
+                $this->campaigns,
+            ),
+        ];
+
+        if ($this->nextToken !== null) {
+            $data['nextToken'] = $this->nextToken;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         $campaigns = array_map(

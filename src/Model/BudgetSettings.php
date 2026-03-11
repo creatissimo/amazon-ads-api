@@ -62,6 +62,26 @@ final class BudgetSettings
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->budgetAllocation !== null) {
+            $data['budgetAllocation'] = $this->budgetAllocation->value;
+        }
+        if ($this->flightBudgetRolloverStrategy !== null) {
+            $data['flightBudgetRolloverStrategy'] = $this->flightBudgetRolloverStrategy->value;
+        }
+        if ($this->marketplaceBudgetAllocation !== null) {
+            $data['marketplaceBudgetAllocation'] = $this->marketplaceBudgetAllocation->value;
+        }
+        if ($this->offAmazonBudgetControlStrategy !== null) {
+            $data['offAmazonBudgetControlStrategy'] = $this->offAmazonBudgetControlStrategy->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

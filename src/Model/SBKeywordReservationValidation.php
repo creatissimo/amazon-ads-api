@@ -62,6 +62,21 @@ final class SBKeywordReservationValidation
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'isReservable' => $this->isReservable,
+            'keyword' => $this->keyword,
+            'keywordReservationValidationId' => $this->keywordReservationValidationId,
+        ];
+
+        if ($this->reservationRejectedReason !== null) {
+            $data['reservationRejectedReason'] = $this->reservationRejectedReason;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

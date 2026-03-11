@@ -40,6 +40,26 @@ final class BrandStoreEditionPublishVersionMultiStatusResponse
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->error !== []) {
+            $data['error'] = array_map(
+                static fn(ErrorsIndex $v) => $v->toArray(),
+                $this->error,
+            );
+        }
+        if ($this->success !== []) {
+            $data['success'] = array_map(
+                static fn(BrandStoreEditionPublishVersionMultiStatusSuccess $v) => $v->toArray(),
+                $this->success,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

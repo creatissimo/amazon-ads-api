@@ -23,6 +23,15 @@ final class DSPBudgetValue
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'monetaryBudgetValue' => $this->monetaryBudgetValue->toArray(),
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

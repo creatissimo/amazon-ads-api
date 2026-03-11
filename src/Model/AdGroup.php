@@ -373,6 +373,100 @@ final class AdGroup
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adGroupId' => $this->adGroupId,
+            'adProduct' => $this->adProduct->value,
+            'campaignId' => $this->campaignId,
+            'creationDateTime' => $this->creationDateTime,
+            'lastUpdatedDateTime' => $this->lastUpdatedDateTime,
+            'name' => $this->name,
+            'state' => $this->state->value,
+        ];
+
+        if ($this->advertisedProductCategoryIds !== []) {
+            $data['advertisedProductCategoryIds'] = $this->advertisedProductCategoryIds;
+        }
+        if ($this->bid !== null) {
+            $data['bid'] = $this->bid->toArray();
+        }
+        if ($this->budgets !== []) {
+            $data['budgets'] = array_map(
+                static fn(Budget $v) => $v->toArray(),
+                $this->budgets,
+            );
+        }
+        if ($this->creativeRotationType !== null) {
+            $data['creativeRotationType'] = $this->creativeRotationType->value;
+        }
+        if ($this->creativeType !== null) {
+            $data['creativeType'] = $this->creativeType->value;
+        }
+        if ($this->endDateTime !== null) {
+            $data['endDateTime'] = $this->endDateTime;
+        }
+        if ($this->fees !== []) {
+            $data['fees'] = array_map(
+                static fn(Fee $v) => $v->toArray(),
+                $this->fees,
+            );
+        }
+        if ($this->frequencies !== []) {
+            $data['frequencies'] = array_map(
+                static fn(Frequency $v) => $v->toArray(),
+                $this->frequencies,
+            );
+        }
+        if ($this->globalAdGroupId !== null) {
+            $data['globalAdGroupId'] = $this->globalAdGroupId;
+        }
+        if ($this->inventoryType !== null) {
+            $data['inventoryType'] = $this->inventoryType->value;
+        }
+        if ($this->marketplaceConfigurations !== []) {
+            $data['marketplaceConfigurations'] = array_map(
+                static fn(MarketplaceAdGroupConfigurations $v) => $v->toArray(),
+                $this->marketplaceConfigurations,
+            );
+        }
+        if ($this->marketplaceScope !== null) {
+            $data['marketplaceScope'] = $this->marketplaceScope->value;
+        }
+        if ($this->marketplaces !== []) {
+            $data['marketplaces'] = array_map(
+                static fn(Marketplace $v) => $v->value,
+                $this->marketplaces,
+            );
+        }
+        if ($this->optimization !== null) {
+            $data['optimization'] = $this->optimization->toArray();
+        }
+        if ($this->pacing !== null) {
+            $data['pacing'] = $this->pacing->toArray();
+        }
+        if ($this->purchaseOrderNumber !== null) {
+            $data['purchaseOrderNumber'] = $this->purchaseOrderNumber;
+        }
+        if ($this->startDateTime !== null) {
+            $data['startDateTime'] = $this->startDateTime;
+        }
+        if ($this->status !== null) {
+            $data['status'] = $this->status->toArray();
+        }
+        if ($this->tags !== []) {
+            $data['tags'] = array_map(
+                static fn(Tag $v) => $v->toArray(),
+                $this->tags,
+            );
+        }
+        if ($this->targetingSettings !== null) {
+            $data['targetingSettings'] = $this->targetingSettings->toArray();
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

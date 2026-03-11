@@ -101,6 +101,28 @@ final class AdAssociation
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adAssociationId' => $this->adAssociationId,
+            'adGroupId' => $this->adGroupId,
+            'adId' => $this->adId,
+            'state' => $this->state->value,
+        ];
+
+        if ($this->startDateTime !== null) {
+            $data['startDateTime'] = $this->startDateTime;
+        }
+        if ($this->endDateTime !== null) {
+            $data['endDateTime'] = $this->endDateTime;
+        }
+        if ($this->weight !== null) {
+            $data['weight'] = $this->weight;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

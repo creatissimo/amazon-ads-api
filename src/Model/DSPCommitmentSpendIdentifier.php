@@ -36,6 +36,19 @@ final class DSPCommitmentSpendIdentifier
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'commitmentId' => $this->commitmentId,
+        ];
+
+        if ($this->spendDimension !== null) {
+            $data['spendDimension'] = $this->spendDimension;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

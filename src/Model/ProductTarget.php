@@ -49,6 +49,17 @@ final class ProductTarget
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'matchType' => $this->matchType->value,
+            'product' => $this->product->toArray(),
+            'productIdType' => $this->productIdType->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

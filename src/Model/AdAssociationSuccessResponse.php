@@ -41,6 +41,22 @@ final class AdAssociationSuccessResponse
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adAssociations' => array_map(
+                static fn(AdAssociation $v) => $v->toArray(),
+                $this->adAssociations,
+            ),
+        ];
+
+        if ($this->nextToken !== null) {
+            $data['nextToken'] = $this->nextToken;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

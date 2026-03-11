@@ -36,6 +36,16 @@ final class SBCreateAdvertisingDealPrice
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'priceType' => $this->priceType->value,
+            'value' => $this->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

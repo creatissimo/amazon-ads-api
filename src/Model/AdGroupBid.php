@@ -77,6 +77,32 @@ final class AdGroupBid
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->baseBid !== null) {
+            $data['baseBid'] = $this->baseBid;
+        }
+        if ($this->currencyCode !== null) {
+            $data['currencyCode'] = $this->currencyCode->value;
+        }
+        if ($this->defaultBid !== null) {
+            $data['defaultBid'] = $this->defaultBid;
+        }
+        if ($this->marketplaceSettings !== []) {
+            $data['marketplaceSettings'] = array_map(
+                static fn(AdGroupBidMarketplaceSetting $v) => $v->toArray(),
+                $this->marketplaceSettings,
+            );
+        }
+        if ($this->maxAverageBid !== null) {
+            $data['maxAverageBid'] = $this->maxAverageBid;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

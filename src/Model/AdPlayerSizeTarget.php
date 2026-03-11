@@ -16,6 +16,15 @@ final class AdPlayerSizeTarget
         return $this->adPlayerSize;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adPlayerSize' => $this->adPlayerSize,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

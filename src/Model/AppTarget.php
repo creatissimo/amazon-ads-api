@@ -22,6 +22,16 @@ final class AppTarget
         return $this->appType;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'appId' => $this->appId,
+            'appType' => $this->appType,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

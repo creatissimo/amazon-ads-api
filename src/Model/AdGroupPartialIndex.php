@@ -51,6 +51,20 @@ final class AdGroupPartialIndex
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adGroup' => $this->adGroup->toArray(),
+            'errors' => array_map(
+                static fn(Error $v) => $v->toArray(),
+                $this->errors,
+            ),
+            'index' => $this->index,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -36,6 +36,16 @@ final class DSPCommitmentMultiStatusSuccess
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'commitment' => $this->commitment->toArray(),
+            'index' => $this->index,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -250,6 +250,62 @@ final class Target
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adProduct' => $this->adProduct->value,
+            'creationDateTime' => $this->creationDateTime,
+            'lastUpdatedDateTime' => $this->lastUpdatedDateTime,
+            'negative' => $this->negative,
+            'state' => $this->state->value,
+            'targetDetails' => $this->targetDetails->toArray(),
+            'targetId' => $this->targetId,
+            'targetType' => $this->targetType->value,
+        ];
+
+        if ($this->adGroupId !== null) {
+            $data['adGroupId'] = $this->adGroupId;
+        }
+        if ($this->bid !== null) {
+            $data['bid'] = $this->bid->toArray();
+        }
+        if ($this->campaignId !== null) {
+            $data['campaignId'] = $this->campaignId;
+        }
+        if ($this->globalTargetId !== null) {
+            $data['globalTargetId'] = $this->globalTargetId;
+        }
+        if ($this->marketplaceConfigurations !== []) {
+            $data['marketplaceConfigurations'] = array_map(
+                static fn(MarketplaceTargetConfigurations $v) => $v->toArray(),
+                $this->marketplaceConfigurations,
+            );
+        }
+        if ($this->marketplaceScope !== null) {
+            $data['marketplaceScope'] = $this->marketplaceScope->value;
+        }
+        if ($this->marketplaces !== []) {
+            $data['marketplaces'] = array_map(
+                static fn(Marketplace $v) => $v->value,
+                $this->marketplaces,
+            );
+        }
+        if ($this->status !== null) {
+            $data['status'] = $this->status->toArray();
+        }
+        if ($this->tags !== []) {
+            $data['tags'] = array_map(
+                static fn(Tag $v) => $v->toArray(),
+                $this->tags,
+            );
+        }
+        if ($this->targetLevel !== null) {
+            $data['targetLevel'] = $this->targetLevel->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

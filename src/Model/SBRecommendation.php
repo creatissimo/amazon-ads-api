@@ -64,6 +64,24 @@ final class SBRecommendation
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'recommendationId' => $this->recommendationId,
+            'recommendationType' => $this->recommendationType,
+            'recommendedObjects' => array_map(
+                static fn(SBRecommendedObject $v) => $v->toArray(),
+                $this->recommendedObjects,
+            ),
+        ];
+
+        if ($this->recommendationTypeDetails !== null) {
+            $data['recommendationTypeDetails'] = $this->recommendationTypeDetails->toArray();
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

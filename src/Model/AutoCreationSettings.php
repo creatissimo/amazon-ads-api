@@ -36,6 +36,20 @@ final class AutoCreationSettings
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->autoCreateTargets !== null) {
+            $data['autoCreateTargets'] = $this->autoCreateTargets;
+        }
+        if ($this->autoManageCampaign !== null) {
+            $data['autoManageCampaign'] = $this->autoManageCampaign;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

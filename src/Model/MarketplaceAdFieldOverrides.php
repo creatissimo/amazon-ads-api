@@ -38,6 +38,23 @@ final class MarketplaceAdFieldOverrides
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->state !== null) {
+            $data['state'] = $this->state->value;
+        }
+        if ($this->tags !== []) {
+            $data['tags'] = array_map(
+                static fn(Tag $v) => $v->toArray(),
+                $this->tags,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

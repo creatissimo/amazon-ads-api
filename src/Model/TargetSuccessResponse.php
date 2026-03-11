@@ -54,6 +54,25 @@ final class TargetSuccessResponse
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'targets' => array_map(
+                static fn(Target $v) => $v->toArray(),
+                $this->targets,
+            ),
+        ];
+
+        if ($this->nextToken !== null) {
+            $data['nextToken'] = $this->nextToken;
+        }
+        if ($this->totalResults !== null) {
+            $data['totalResults'] = $this->totalResults;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

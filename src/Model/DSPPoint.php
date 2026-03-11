@@ -51,6 +51,25 @@ final class DSPPoint
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'x' => $this->x->toArray(),
+        ];
+
+        if ($this->pointType !== null) {
+            $data['pointType'] = $this->pointType;
+        }
+        if ($this->y !== []) {
+            $data['y'] = array_map(
+                static fn(DSPYPoint $v) => $v->toArray(),
+                $this->y,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

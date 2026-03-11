@@ -49,6 +49,20 @@ final class DSPForecastMetric
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'metric' => $this->metric->value,
+            'value' => $this->value->toArray(),
+        ];
+
+        if ($this->periodicity !== null) {
+            $data['periodicity'] = $this->periodicity->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

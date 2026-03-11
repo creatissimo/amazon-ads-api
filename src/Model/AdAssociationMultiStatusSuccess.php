@@ -36,6 +36,16 @@ final class AdAssociationMultiStatusSuccess
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adAssociation' => $this->adAssociation->toArray(),
+            'index' => $this->index,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

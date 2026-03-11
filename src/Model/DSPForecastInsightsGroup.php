@@ -90,6 +90,28 @@ final class DSPForecastInsightsGroup
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'displayName' => $this->displayName,
+            'groupType' => $this->groupType->value,
+            'insightsFeatures' => array_map(
+                static fn(DSPInsightFeature $v) => $v->value,
+                $this->insightsFeatures,
+            ),
+            'tag' => $this->tag,
+        ];
+
+        if ($this->coldStartDealNames !== []) {
+            $data['coldStartDealNames'] = $this->coldStartDealNames;
+        }
+        if ($this->coldStartSegmentNames !== []) {
+            $data['coldStartSegmentNames'] = $this->coldStartSegmentNames;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

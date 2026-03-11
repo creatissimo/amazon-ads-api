@@ -36,6 +36,16 @@ final class BrandStoreEditionPublishVersionMultiStatusSuccess
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'brandStoreEditionPublishVersion' => $this->brandStoreEditionPublishVersion->toArray(),
+            'index' => $this->index,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

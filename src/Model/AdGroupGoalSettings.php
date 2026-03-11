@@ -23,6 +23,17 @@ final class AdGroupGoalSettings
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->kpi !== null) {
+            $data['kpi'] = $this->kpi->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

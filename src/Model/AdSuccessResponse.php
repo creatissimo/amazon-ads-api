@@ -41,6 +41,22 @@ final class AdSuccessResponse
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'ads' => array_map(
+                static fn(Ad $v) => $v->toArray(),
+                $this->ads,
+            ),
+        ];
+
+        if ($this->nextToken !== null) {
+            $data['nextToken'] = $this->nextToken;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

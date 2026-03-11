@@ -49,6 +49,17 @@ final class DSPForecastValue
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'high' => $this->high,
+            'low' => $this->low,
+            'mean' => $this->mean,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

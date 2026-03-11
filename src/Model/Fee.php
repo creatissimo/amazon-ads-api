@@ -88,6 +88,20 @@ final class Fee
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'addToBudgetSpentAmount' => $this->addToBudgetSpentAmount,
+            'currencyCode' => $this->currencyCode->value,
+            'feeType' => $this->feeType->value,
+            'feeValue' => $this->feeValue,
+            'feeValueType' => $this->feeValueType->value,
+            'thirdPartyProvider' => $this->thirdPartyProvider->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

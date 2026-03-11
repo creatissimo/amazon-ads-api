@@ -36,6 +36,16 @@ final class SBKeywordReservationValidationMultiStatusSuccess
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'index' => $this->index,
+            'keywordReservationValidation' => $this->keywordReservationValidation->toArray(),
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -23,6 +23,15 @@ final class DSPDeliverInFullConfidence
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'value' => $this->value->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

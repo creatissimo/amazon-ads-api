@@ -22,6 +22,16 @@ final class ContentRatingTarget
         return $this->contentRatingTypeDetails;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'contentRatingType' => $this->contentRatingType,
+            'contentRatingTypeDetails' => $this->contentRatingTypeDetails,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

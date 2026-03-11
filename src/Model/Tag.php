@@ -36,6 +36,16 @@ final class Tag
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'key' => $this->key,
+            'value' => $this->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

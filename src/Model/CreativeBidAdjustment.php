@@ -36,6 +36,19 @@ final class CreativeBidAdjustment
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'percentage' => $this->percentage,
+        ];
+
+        if ($this->creativeType !== null) {
+            $data['creativeType'] = $this->creativeType->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

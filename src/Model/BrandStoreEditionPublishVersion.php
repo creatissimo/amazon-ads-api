@@ -90,6 +90,26 @@ final class BrandStoreEditionPublishVersion
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'editionId' => $this->editionId,
+            'publishState' => $this->publishState->value,
+            'publishStatus' => $this->publishStatus->value,
+            'storeEditionPublishId' => $this->storeEditionPublishId,
+            'storeId' => $this->storeId,
+        ];
+
+        if ($this->pages !== []) {
+            $data['pages'] = array_map(
+                static fn(StorePageVersion $v) => $v->toArray(),
+                $this->pages,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

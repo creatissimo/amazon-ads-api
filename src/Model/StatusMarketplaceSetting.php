@@ -51,6 +51,23 @@ final class StatusMarketplaceSetting
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'deliveryStatus' => $this->deliveryStatus->value,
+            'marketplace' => $this->marketplace->value,
+        ];
+
+        if ($this->deliveryReasons !== []) {
+            $data['deliveryReasons'] = array_map(
+                static fn(DeliveryReason $v) => $v->value,
+                $this->deliveryReasons,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -38,6 +38,22 @@ final class DSPForecastMetricsDescription
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'allMetrics' => $this->allMetrics,
+        ];
+
+        if ($this->selectedMetrics !== []) {
+            $data['selectedMetrics'] = array_map(
+                static fn(DSPSelectedForecastMetric $v) => $v->value,
+                $this->selectedMetrics,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

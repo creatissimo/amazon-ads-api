@@ -53,6 +53,29 @@ final class DSPCurve
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->focusPoint !== []) {
+            $data['focusPoint'] = array_map(
+                static fn(DSPPoint $v) => $v->toArray(),
+                $this->focusPoint,
+            );
+        }
+        if ($this->periodicity !== null) {
+            $data['periodicity'] = $this->periodicity->value;
+        }
+        if ($this->points !== []) {
+            $data['points'] = array_map(
+                static fn(DSPPoint $v) => $v->toArray(),
+                $this->points,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

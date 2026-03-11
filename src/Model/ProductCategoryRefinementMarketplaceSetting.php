@@ -36,6 +36,16 @@ final class ProductCategoryRefinementMarketplaceSetting
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'marketplace' => $this->marketplace->value,
+            'productCategoryRefinement' => $this->productCategoryRefinement->toArray(),
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -101,6 +101,28 @@ final class DSPCommitmentSpend
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'accruedToDateTime' => $this->accruedToDateTime,
+            'commitmentId' => $this->commitmentId->toArray(),
+            'currencyCode' => $this->currencyCode->value,
+            'spendDimensionType' => $this->spendDimensionType->value,
+        ];
+
+        if ($this->accruedSpendValue !== null) {
+            $data['accruedSpendValue'] = $this->accruedSpendValue;
+        }
+        if ($this->projectedSpendValue !== null) {
+            $data['projectedSpendValue'] = $this->projectedSpendValue;
+        }
+        if ($this->spendAtRiskValue !== null) {
+            $data['spendAtRiskValue'] = $this->spendAtRiskValue;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

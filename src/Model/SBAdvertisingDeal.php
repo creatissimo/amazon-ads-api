@@ -101,6 +101,26 @@ final class SBAdvertisingDeal
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'advertisingDealId' => $this->advertisingDealId,
+            'endDateTime' => $this->endDateTime,
+            'name' => $this->name,
+            'startDateTime' => $this->startDateTime,
+            'status' => $this->status->toArray(),
+        ];
+
+        if ($this->price !== null) {
+            $data['price'] = $this->price->toArray();
+        }
+        if ($this->state !== null) {
+            $data['state'] = $this->state->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

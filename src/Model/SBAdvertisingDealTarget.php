@@ -62,6 +62,18 @@ final class SBAdvertisingDealTarget
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'advertisingDealId' => $this->advertisingDealId,
+            'advertisingDealTargetId' => $this->advertisingDealTargetId,
+            'targetDetails' => $this->targetDetails->toArray(),
+            'targetType' => $this->targetType->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

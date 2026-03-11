@@ -62,6 +62,25 @@ final class DSPCampaignForecastDescription
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'campaignId' => $this->campaignId,
+        ];
+
+        if ($this->enabledFeatures !== null) {
+            $data['enabledFeatures'] = $this->enabledFeatures->toArray();
+        }
+        if ($this->flightIds !== []) {
+            $data['flightIds'] = $this->flightIds;
+        }
+        if ($this->replanningSettings !== null) {
+            $data['replanningSettings'] = $this->replanningSettings->toArray();
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

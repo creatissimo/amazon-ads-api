@@ -62,6 +62,18 @@ final class Frequency
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'eventMaxCount' => $this->eventMaxCount,
+            'frequencyTargetingSetting' => $this->frequencyTargetingSetting->value,
+            'timeCount' => $this->timeCount,
+            'timeUnit' => $this->timeUnit->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

@@ -36,6 +36,16 @@ final class SBRejectedKeyword
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'keyword' => $this->keyword,
+            'reason' => $this->reason,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

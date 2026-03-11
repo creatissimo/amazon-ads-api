@@ -36,6 +36,16 @@ final class DSPYPoint
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'label' => $this->label->value,
+            'value' => $this->value->toArray(),
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

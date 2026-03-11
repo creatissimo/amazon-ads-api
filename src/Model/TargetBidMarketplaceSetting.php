@@ -49,6 +49,20 @@ final class TargetBidMarketplaceSetting
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'currencyCode' => $this->currencyCode->value,
+            'marketplace' => $this->marketplace->value,
+        ];
+
+        if ($this->bid !== null) {
+            $data['bid'] = $this->bid;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

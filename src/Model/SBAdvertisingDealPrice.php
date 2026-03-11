@@ -49,6 +49,17 @@ final class SBAdvertisingDealPrice
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'currencyCode' => $this->currencyCode->value,
+            'priceType' => $this->priceType->value,
+            'value' => $this->value,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

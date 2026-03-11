@@ -88,6 +88,23 @@ final class BrandStorePage
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'content' => $this->content->toArray(),
+            'editionId' => $this->editionId,
+            'pageId' => $this->pageId,
+            'pageType' => $this->pageType->value,
+            'storeId' => $this->storeId,
+        ];
+
+        if ($this->storeEditionPublishId !== null) {
+            $data['storeEditionPublishId'] = $this->storeEditionPublishId;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

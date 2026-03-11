@@ -38,6 +38,23 @@ final class ProductValue
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->productId !== null) {
+            $data['productId'] = $this->productId;
+        }
+        if ($this->marketplaceSettings !== []) {
+            $data['marketplaceSettings'] = array_map(
+                static fn(ProductMarketplaceSetting $v) => $v->toArray(),
+                $this->marketplaceSettings,
+            );
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

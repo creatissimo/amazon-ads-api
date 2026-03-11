@@ -36,6 +36,20 @@ final class BidSettings
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [];
+
+        if ($this->bidAdjustments !== null) {
+            $data['bidAdjustments'] = $this->bidAdjustments->toArray();
+        }
+        if ($this->bidStrategy !== null) {
+            $data['bidStrategy'] = $this->bidStrategy->value;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

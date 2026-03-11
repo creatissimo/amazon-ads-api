@@ -444,6 +444,126 @@ final class Campaign
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'adProduct' => $this->adProduct->value,
+            'campaignId' => $this->campaignId,
+            'creationDateTime' => $this->creationDateTime,
+            'lastUpdatedDateTime' => $this->lastUpdatedDateTime,
+            'name' => $this->name,
+            'state' => $this->state->value,
+        ];
+
+        if ($this->autoCreationSettings !== null) {
+            $data['autoCreationSettings'] = $this->autoCreationSettings->toArray();
+        }
+        if ($this->autoScaleGlobalCampaign !== null) {
+            $data['autoScaleGlobalCampaign'] = $this->autoScaleGlobalCampaign->value;
+        }
+        if ($this->brandId !== null) {
+            $data['brandId'] = $this->brandId;
+        }
+        if ($this->budgets !== []) {
+            $data['budgets'] = array_map(
+                static fn(Budget $v) => $v->toArray(),
+                $this->budgets,
+            );
+        }
+        if ($this->costType !== null) {
+            $data['costType'] = $this->costType->value;
+        }
+        if ($this->countries !== []) {
+            $data['countries'] = array_map(
+                static fn(CountryCode $v) => $v->value,
+                $this->countries,
+            );
+        }
+        if ($this->endDateTime !== null) {
+            $data['endDateTime'] = $this->endDateTime;
+        }
+        if ($this->fees !== []) {
+            $data['fees'] = array_map(
+                static fn(CampaignFee $v) => $v->toArray(),
+                $this->fees,
+            );
+        }
+        if ($this->flights !== []) {
+            $data['flights'] = array_map(
+                static fn(CampaignFlight $v) => $v->toArray(),
+                $this->flights,
+            );
+        }
+        if ($this->frequencies !== []) {
+            $data['frequencies'] = array_map(
+                static fn(Frequency $v) => $v->toArray(),
+                $this->frequencies,
+            );
+        }
+        if ($this->globalCampaignId !== null) {
+            $data['globalCampaignId'] = $this->globalCampaignId;
+        }
+        if ($this->isMultiAdGroupsEnabled !== null) {
+            $data['isMultiAdGroupsEnabled'] = $this->isMultiAdGroupsEnabled;
+        }
+        if ($this->marketplaceConfigurations !== []) {
+            $data['marketplaceConfigurations'] = array_map(
+                static fn(MarketplaceCampaignConfigurations $v) => $v->toArray(),
+                $this->marketplaceConfigurations,
+            );
+        }
+        if ($this->marketplaceScope !== null) {
+            $data['marketplaceScope'] = $this->marketplaceScope->value;
+        }
+        if ($this->marketplaces !== []) {
+            $data['marketplaces'] = array_map(
+                static fn(Marketplace $v) => $v->value,
+                $this->marketplaces,
+            );
+        }
+        if ($this->optimizations !== null) {
+            $data['optimizations'] = $this->optimizations->toArray();
+        }
+        if ($this->portfolioId !== null) {
+            $data['portfolioId'] = $this->portfolioId;
+        }
+        if ($this->purchaseOrderNumber !== null) {
+            $data['purchaseOrderNumber'] = $this->purchaseOrderNumber;
+        }
+        if ($this->salesChannel !== null) {
+            $data['salesChannel'] = $this->salesChannel->value;
+        }
+        if ($this->siteRestrictions !== []) {
+            $data['siteRestrictions'] = array_map(
+                static fn(SiteRestriction $v) => $v->value,
+                $this->siteRestrictions,
+            );
+        }
+        if ($this->skanAppId !== null) {
+            $data['skanAppId'] = $this->skanAppId;
+        }
+        if ($this->startDateTime !== null) {
+            $data['startDateTime'] = $this->startDateTime;
+        }
+        if ($this->status !== null) {
+            $data['status'] = $this->status->toArray();
+        }
+        if ($this->tags !== []) {
+            $data['tags'] = array_map(
+                static fn(Tag $v) => $v->toArray(),
+                $this->tags,
+            );
+        }
+        if ($this->targetedPGDealId !== null) {
+            $data['targetedPGDealId'] = $this->targetedPGDealId;
+        }
+        if ($this->targetsAmazonDeal !== null) {
+            $data['targetsAmazonDeal'] = $this->targetsAmazonDeal;
+        }
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(

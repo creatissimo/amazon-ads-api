@@ -16,6 +16,15 @@ final class PlacementTypeTarget
         return $this->placementType;
     }
 
+    public function toArray(): array
+    {
+        $data = [
+            'placementType' => $this->placementType,
+        ];
+
+        return $data;
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(
